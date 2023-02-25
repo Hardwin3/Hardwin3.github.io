@@ -147,6 +147,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/25/%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%B5%8B%E9%80%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/25/%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%B5%8B%E9%80%9F/" class="post-title-link" itemprop="url">硬盘读写测速</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-02-25 23:26:32 / Modified: 23:45:03" itemprop="dateCreated datePublished" datetime="2023-02-25T23:26:32+08:00">2023-02-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>linux下使用dd命令进行简单测速</p>
+<h3 id="测试写入速度"><a href="#测试写入速度" class="headerlink" title="测试写入速度"></a>测试写入速度</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/mnt/filename bs=1M count=1024</span><br></pre></td></tr></table></figure>
+
+<p>of后面跟着一个不存在的文件名，此命令会在&#x2F;mnt下写入一个名为filename，大小为1G的文件。此方法可以测试磁盘的读写速度。一样的道理，of后为硬盘挂载点时，测试所得写入速度就是硬盘的速度。</p>
+<h3 id="测试读取速度"><a href="#测试读取速度" class="headerlink" title="测试读取速度"></a>测试读取速度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/mnt/filename of=/dev/null bs=1M count=1024</span><br></pre></td></tr></table></figure>
+
+<p>所得速度就是读取速度</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/05/my-first-article/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,17 +435,17 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
