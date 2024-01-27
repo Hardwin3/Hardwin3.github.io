@@ -222,6 +222,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Linux连接</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看网卡信息</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看端口是否开启</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
+<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
+<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
+</li>
+<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
+</li>
+<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
+<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
+<li><p>Cli接口：</p>
+<p>​	[fu@localhost ~]$</p>
+<p>​		fu:当前登录的用户</p>
+<p>​		localhost：主机名</p>
+<p>​		~：当前工作目录，相对路径</p>
+<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
+</li>
+</ul>
+<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
+<li>一切皆文件，几乎所有资源都抽象成文件</li>
+<li>由众多单一的程序组成</li>
+<li>进行避免和用户进行交互，以编程的方式实现</li>
+<li>使用文本文件保存配置信息</li>
+</ul>
+<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
+<li>层级结构,</li>
+<li>倒置树状结构</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -362,115 +471,6 @@
 <p>之后果然没有报错了。</p>
 <h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Linux连接</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看网卡信息</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看端口是否开启</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
-<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
-<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
-</li>
-<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
-</li>
-<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
-<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
-<li><p>Cli接口：</p>
-<p>​	[fu@localhost ~]$</p>
-<p>​		fu:当前登录的用户</p>
-<p>​		localhost：主机名</p>
-<p>​		~：当前工作目录，相对路径</p>
-<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
-</li>
-</ul>
-<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
-<li>一切皆文件，几乎所有资源都抽象成文件</li>
-<li>由众多单一的程序组成</li>
-<li>进行避免和用户进行交互，以编程的方式实现</li>
-<li>使用文本文件保存配置信息</li>
-</ul>
-<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
-<li>层级结构,</li>
-<li>倒置树状结构</li>
-</ul>
 
       
     </div>
@@ -1229,7 +1229,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/shell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1243,7 +1243,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">sed命令详解</a>
+            <a href="/2024/01/27/shell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">shell脚本编程实现</a>
         </h2>
 
         <div class="post-meta">
@@ -1254,7 +1254,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:01:01" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:01:22" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1281,43 +1281,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="sed命令详解"><a href="#sed命令详解" class="headerlink" title="sed命令详解"></a>sed命令详解</h1><h4 id="sed-字符流编辑器"><a href="#sed-字符流编辑器" class="headerlink" title="sed:字符流编辑器"></a>sed:字符流编辑器</h4><p><strong>工作流程：sed会读取文件里的行，然后缓存到sed模式空间，接着开始处理符合规则的行，不符合规则的行会输出到屏幕，符合规则的行也会输出到屏幕。在这个过程中，它只处理了缓存里的数据，没有修改原文件</strong></p>
-<p><strong>使用格式</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [options][sed内置命令字符] [输入文件]</span><br></pre></td></tr></table></figure>
-
+          <h2 id="shell脚本编程实现"><a href="#shell脚本编程实现" class="headerlink" title="shell脚本编程实现"></a>shell脚本编程实现</h2><h4 id="根据其编程过程中调用库还是调用外部的程序文件"><a href="#根据其编程过程中调用库还是调用外部的程序文件" class="headerlink" title="根据其编程过程中调用库还是调用外部的程序文件"></a>根据其编程过程中调用库还是调用外部的程序文件</h4><ul>
+<li><p>shell脚本编程</p>
+<p>​	利用系统上的命令及编程组件进行编程</p>
+</li>
+<li><p>完整编程</p>
+<p>​	利用库或编程组件进行编程</p>
+</li>
+</ul>
+<p><strong>shell脚本编程：过程式编程，解释运行，依赖于外部程序文件运行</strong></p>
+<h4 id="如何写shell脚本"><a href="#如何写shell脚本" class="headerlink" title="如何写shell脚本"></a>如何写shell脚本</h4><ul>
+<li><p>第一行顶格写shebang,解释器路径，用于指明解释执行当前脚本的解释器程序文件如</p>
 <ul>
-<li>选项参数<ul>
-<li>-n 取消默认sed输出，常与内置命令p一起使用</li>
-<li>-i 将修改结果写入文件</li>
-<li>-e 多次编辑，不需要管道符</li>
-<li>-r 支持正则表达</li>
+<li>#!&#x2F;bin&#x2F;bash</li>
+<li>#!&#x2F;usr&#x2F;bin&#x2F;python</li>
+<li>#!&#x2F;usr&#x2F;bin&#x2F;perl</li>
+</ul>
+<p>Notes:</p>
+<p>​		所以xx.sh其实是一个文本文件，运行这个文件真正的过程是内核读取了文件前面的内容，并用bash去运行文本里的内容。所以当bash xx.sh时，xx.sh并不需要+x权限。</p>
+<p>​		脚本中的空白行和#开头的行都会被忽略，除了shebang.</p>
+</li>
+<li><p>文本编辑器</p>
+<ul>
+<li>行编辑器：sed</li>
+<li>全屏幕编辑器：nano ,vi,vim</li>
 </ul>
 </li>
-<li>sed内置命令字符<ul>
-<li>a 对文本 进行追加</li>
-<li>d 删除匹配行</li>
-<li>i 在指定行前插入一行或者多行文本</li>
-<li>p 打印匹配的内容，通常与-n一起使用  </li>
-<li>s&#x2F;被替换&#x2F;替换上的&#x2F;g 把前面的换成后面的，g代表全局</li>
+<li><p>bash的配置文件</p>
+<ul>
+<li><p>profile类：为交互式登录的shell提供配置，交互式：通过某终端输入账号密码登录打开的shell；通过su - username或 su -l username打开的终端；</p>
+<p>​	全局：对所有用户都生效；</p>
+<p>​			&#x2F;etc&#x2F;profile</p>
+<p>​			&#x2F;etc&#x2F;profile.d&#x2F;*.sh</p>
+<p>​	局部：对单个用户生效</p>
+<p>​			~&#x2F;.bash_profile</p>
+<p>​	功用：</p>
+<p>​			用于定义环境变脸</p>
+<p>​			运行命令或脚本</p>
+</li>
+<li><p>bashrc类：为非交互式登录的shell提供配置，非交互式：su username;在图形界面打开的终端；运行脚本的时候的子shell；</p>
+<p>​	全局：</p>
+<p>​			&#x2F;etc&#x2F;bashrc</p>
+<p>​	用户个人：</p>
+<p>​			~&#x2F;.bashrc</p>
+<p>​	功用：</p>
+<p>​			定义本地变量</p>
+<p>​			定义命令别名</p>
+<p>​	交互式登录shell进程：<br>​				&#x2F;etc&#x2F;profile—-&gt;&gt;&#x2F;etc&#x2F;profile.d&#x2F;*——-&gt;<del>&#x2F;.bash_proflie——&gt;</del>&#x2F;.bashrc——&gt;&#x2F;etc&#x2F;bashrc</p>
+<p>​	非交互的shell:</p>
+<p>​				~&#x2F;.bashrc——&gt;&#x2F;etc&#x2F;bashrc——&gt;&#x2F;etc&#x2F;profile.d&#x2F;*</p>
+<p>​</p>
+</li>
+</ul>
+<p>	</p>
+</li>
+<li><p>命令行定义的特性，在当前shell有效</p>
+</li>
+<li><p>配置文件定义的特性，在下一次有效</p>
+<ul>
+<li>通过命令行重新定义一次</li>
+<li>重新加载一次配置文件<ul>
+<li>source </li>
+<li>.</li>
 </ul>
 </li>
-<li>sed匹配范围（在内置命令前写上）<ul>
-<li>空地址 全文处理，什么都不写</li>
-<li>单地址 指定文件某一行，数字</li>
-<li>&#x2F;pattern&#x2F; 被模式匹配到的每一行</li>
-<li>范围区间 <ul>
-<li>10，20  十到二十行</li>
-<li>10，+5 第十行加上 向下5行</li>
-<li>&#x2F;pattern1&#x2F;,&#x2F;pattern2&#x2F;</li>
-</ul>
-</li>
-<li>步长<ul>
-<li>1~2 表示从第一行开始步长为2的行</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+<p>​	</p>
 
       
     </div>
@@ -1408,7 +1439,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
