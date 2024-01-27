@@ -430,7 +430,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:55:31" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 23:21:02" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -457,9 +457,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192504488.png" alt="image-20240127192504488"></p>
+          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="https://s2.loli.net/2024/01/27/RhyIlGEUHoN68Pg.png"></p>
 <p>结果 sudo apt update 却遇上了报错</p>
-<p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192719981.png" alt="image-20240127192719981"></p>
+<p><img src="https://s2.loli.net/2024/01/27/TGj5RzSo2YkepgC.png"></p>
 <p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
 <p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
