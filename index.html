@@ -296,6 +296,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/" class="post-title-link" itemprop="url">arm64开发板上armbian换源报错解决</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:55:31" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192504488.png" alt="image-20240127192504488"></p>
+<p>结果 sudo apt update 却遇上了报错</p>
+<p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192719981.png" alt="image-20240127192719981"></p>
+<p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
+<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
+
+<p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
+<p>所以解决方法就是用<strong>dpkg</strong>来移除这个amd64的额外架构。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ sudo dpkg --remove-architecture amd64</span><br><span class="line">ajin@CRRC:~$ sudo apt update</span><br><span class="line">命中:1 http://mirrors.tuna.tsinghua.edu.cn/armbian focal InRelease</span><br><span class="line">命中:2 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal InRelease</span><br><span class="line">命中:3 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates InRelease</span><br><span class="line">命中:4 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports InRelease</span><br><span class="line">命中:6 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal InRelease</span><br><span class="line">命中:7 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease</span><br><span class="line">命中:5 http://mirrors.ustc.edu.cn/armbian focal InRelease</span><br><span class="line">命中:8 https://download.docker.com/linux/ubuntu focal InRelease</span><br><span class="line">获取:9 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/universe armhf Packages [10.9 MB]</span><br><span class="line">获取:10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/restricted armhf Packages [10.8 kB]</span><br><span class="line">获取:11 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/main armhf Packages [1,227 kB]</span><br><span class="line">获取:12 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/multiverse armhf Packages [141 kB]</span><br><span class="line">获取:13 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/multiverse armhf Packages [9,898 B]</span><br><span class="line">获取:14 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/restricted armhf Packages [21.9 kB]</span><br><span class="line">获取:15 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/main armhf Packages [1,835 kB]</span><br><span class="line">获取:16 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/universe armhf Packages [1,172 kB]</span><br><span class="line">获取:17 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/universe armhf Packages [27.8 kB]</span><br><span class="line">获取:18 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/main armhf Packages [54.7 kB]</span><br><span class="line">获取:19 http://ports.ubuntu.com/ubuntu-ports focal-security/universe armhf Packages [887 kB]</span><br><span class="line">获取:20 http://ports.ubuntu.com/ubuntu-ports focal-security/multiverse armhf Packages [5,099 B]</span><br><span class="line">获取:21 http://ports.ubuntu.com/ubuntu-ports focal-security/main armhf Packages [1,475 kB]</span><br><span class="line">获取:22 http://ports.ubuntu.com/ubuntu-ports focal-security/restricted armhf Packages [21.6 kB]</span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树</span><br><span class="line">正在读取状态信息... 完成</span><br><span class="line">有 286 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</span><br></pre></td></tr></table></figure>
+
+<p>之后果然没有报错了。</p>
+<h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -386,91 +471,6 @@
 <li>层级结构,</li>
 <li>倒置树状结构</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/" class="post-title-link" itemprop="url">arm64开发板上armbian换源报错解决</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:55:31" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192504488.png" alt="image-20240127192504488"></p>
-<p>结果 sudo apt update 却遇上了报错</p>
-<p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192719981.png" alt="image-20240127192719981"></p>
-<p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
-<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
-
-<p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
-<p>所以解决方法就是用<strong>dpkg</strong>来移除这个amd64的额外架构。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ sudo dpkg --remove-architecture amd64</span><br><span class="line">ajin@CRRC:~$ sudo apt update</span><br><span class="line">命中:1 http://mirrors.tuna.tsinghua.edu.cn/armbian focal InRelease</span><br><span class="line">命中:2 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal InRelease</span><br><span class="line">命中:3 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates InRelease</span><br><span class="line">命中:4 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports InRelease</span><br><span class="line">命中:6 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal InRelease</span><br><span class="line">命中:7 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease</span><br><span class="line">命中:5 http://mirrors.ustc.edu.cn/armbian focal InRelease</span><br><span class="line">命中:8 https://download.docker.com/linux/ubuntu focal InRelease</span><br><span class="line">获取:9 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/universe armhf Packages [10.9 MB]</span><br><span class="line">获取:10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/restricted armhf Packages [10.8 kB]</span><br><span class="line">获取:11 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/main armhf Packages [1,227 kB]</span><br><span class="line">获取:12 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/multiverse armhf Packages [141 kB]</span><br><span class="line">获取:13 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/multiverse armhf Packages [9,898 B]</span><br><span class="line">获取:14 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/restricted armhf Packages [21.9 kB]</span><br><span class="line">获取:15 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/main armhf Packages [1,835 kB]</span><br><span class="line">获取:16 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/universe armhf Packages [1,172 kB]</span><br><span class="line">获取:17 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/universe armhf Packages [27.8 kB]</span><br><span class="line">获取:18 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/main armhf Packages [54.7 kB]</span><br><span class="line">获取:19 http://ports.ubuntu.com/ubuntu-ports focal-security/universe armhf Packages [887 kB]</span><br><span class="line">获取:20 http://ports.ubuntu.com/ubuntu-ports focal-security/multiverse armhf Packages [5,099 B]</span><br><span class="line">获取:21 http://ports.ubuntu.com/ubuntu-ports focal-security/main armhf Packages [1,475 kB]</span><br><span class="line">获取:22 http://ports.ubuntu.com/ubuntu-ports focal-security/restricted armhf Packages [21.6 kB]</span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树</span><br><span class="line">正在读取状态信息... 完成</span><br><span class="line">有 286 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</span><br></pre></td></tr></table></figure>
-
-<p>之后果然没有报错了。</p>
-<h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -691,7 +691,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -705,7 +705,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/27/grep%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">grep命令</a>
+            <a href="/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">BASH特性和bash编程</a>
         </h2>
 
         <div class="post-meta">
@@ -716,7 +716,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:40" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:57:47" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -743,106 +743,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h1><h4 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h4><ul>
-<li>grep 文本过滤工具</li>
-<li>sed sream editor,流编辑器，文本编辑工具</li>
-<li>awk 文本报告生成器，格式化文本</li>
+          <h1 id="BASH特性和bash编程"><a href="#BASH特性和bash编程" class="headerlink" title="BASH特性和bash编程"></a>BASH特性和bash编程</h1><h4 id="bash-的特性"><a href="#bash-的特性" class="headerlink" title="bash 的特性"></a>bash 的特性</h4><ul>
+<li>命令行展开： ~，{}</li>
+<li>命令别名：alias,unalias</li>
+<li>命令历史：history</li>
+<li>文件名通配：glob</li>
+<li>快捷键：Ctrl+a,e,u,k,l</li>
+<li>命令补全</li>
+<li>路径补全</li>
+<li>命令hash，缓存之前命令的查找结果，用hash 可以查看</li>
+<li>变量</li>
 </ul>
-<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p><strong>表示控制或通配的功能的特殊字符</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">程序：数据+指令</span><br><span class="line">	指令：程序文件提供</span><br><span class="line">	数据：IO设备，文件，管道，变量</span><br><span class="line">bash是一种弱类型的编程语言，把所有变量视为字符传芳。并且变量无需事先声明。</span><br><span class="line">变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">变量名：包含数字，字母，下划线，同时不能以数字开头。</span><br><span class="line">变量类型：</span><br><span class="line">	本地变量：当前shell进程</span><br><span class="line">		变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">		&quot;&quot;:变量名会替换为值</span><br><span class="line">		&#x27;&#x27;：变量名不会替换为值</span><br><span class="line">		设置或者查看变量：set</span><br><span class="line">		撤销：unset var_name(不适用$)</span><br><span class="line">	环境变量：当前shell以及子shell</span><br><span class="line">		变量赋值：</span><br><span class="line">			1.export name=fu</span><br><span class="line">			2.name=fu</span><br><span class="line">			export name</span><br><span class="line">			3.declare -x name=fu</span><br><span class="line">		查看环境变量：export,declare -x printenv,env</span><br><span class="line">		撤销环境变量:unset var_name</span><br><span class="line">	局部变量：某个代码作用域</span><br><span class="line">	位置参数变量：向执行脚本的shell进程传递的参数</span><br><span class="line">	特殊变量：shell内置的由特殊功能的变量</span><br><span class="line">	</span><br><span class="line">	Notes:</span><br><span class="line">		设置为只读变量:readonly var_name或者declare -r var_name.</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>基本正则表达式 BRE</li>
-<li>拓展正则表达式 ERE</li>
-<li>Notes</li>
-</ul>
-<h4 id="grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行"><a href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行" class="headerlink" title="grep:Global search ERgular expression and Print out the line(输出的是行)"></a>grep:Global search ERgular expression and Print out the line(输出的是行)</h4><ul>
-<li><p>文本搜索工具，根据用户指定的“模式”，对目标文本进行匹配检查，打印匹配到的行</p>
-</li>
-<li><p>模式：由正则表达式的元字符及文本字符所编写的过滤条件</p>
-</li>
-<li><p>格式： </p>
-<ul>
-<li><p>grep [options] Pattern [file]</p>
-</li>
-<li><p>grep [OPTIONS] -e PATTERN … [FILE…]</p>
-</li>
-<li><p>grep [OPTIONS] -f FILE … [FILE…]</p>
-</li>
-<li><p>OPTIONS:</p>
-<ul>
-<li>–color&#x3D;auto 文本着色</li>
-<li>-I ： Ignore 忽略大小写</li>
-<li>-O：只显示匹配到的文本</li>
-<li>-V ：反向匹配</li>
-<li>-E ：支持拓展的正则表达式</li>
-<li>-Q：–quiet 不输出任何信息</li>
-<li>-A#，-B#，-C#，输出上下的行，A后，B前，C前后</li>
-</ul>
-</li>
-<li><p>基本正则表达式的元字符</p>
-<ul>
-<li><p>字符匹配</p>
-<ul>
-<li>. 匹配任意单个字符</li>
-<li>[] 匹配指定范围内的任意单个字符</li>
-<li>[^] 匹配范围外的任意单个字符</li>
-<li>Notes（一个）<ul>
-<li>[:digit:]</li>
-<li>[:lower:]</li>
-<li>[:upper:]</li>
-<li>[:alpha:]</li>
-<li>[:alnum:] 包含数字的字母</li>
-<li>[:punct:] 所有标点符号</li>
-<li>[:space:] 空格</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>匹配次数：用在指定次数的字符的后面，用于限制次数.默认贪婪模式</p>
-<ul>
-<li><p>*：任意次</p>
-</li>
-<li><p>.*:任意长度的任意字符</p>
-</li>
-<li><p>?:匹配前面的字符0次或1次</p>
-</li>
-<li><p>?:匹配前面的字符1次或多次</p>
-</li>
-<li><pre><code class="shell">\&#123;m\&#125;:匹配前面的字符m次
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&#123;m,n\&#125;：至少m次，至多n次</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>&#96;&#96;&#96;<br>{0,n}:至多n次</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  \&#123;m,\&#125;:至少m次</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>位置锁定</p>
-<ul>
-<li><p>^:行首锚定，用于模式的左边</p>
-</li>
-<li><p>$:行尾锚定，写在模式右边</p>
-</li>
-<li><p>^pattern$:pattern开口，pattern结尾</p>
-<ul>
-<li>^$:不包含任意字符</li>
-<li>^[[:space:]]*$:可以有空格的行</li>
-</ul>
-</li>
-<li><p>单词锚定，非特殊字符组成的连续字符，包括数字，都称为单词</p>
-<ul>
-<li><pre><code>\&lt;或\b词首锚定，用于单词的模式的左侧
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&gt;或\b词尾锚定，用于单词的右侧</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>&#96;&#96;&#96;<br>&lt;pattern&gt;精确匹配单词</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">- 分组以及引用</span><br><span class="line"></span><br><span class="line">  - 分组符号</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>()分组符号（括号）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 引用，分组括号中的模式匹配到的内容会被正则表达式自动记录下内部变量中</span><br><span class="line"></span><br><span class="line">  - \1，从左侧起，第一个括号匹配到的字符</span><br><span class="line">  - \2</span><br><span class="line">  - \3</span><br><span class="line">  - 等等</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  grep &quot;\(l..e\).*\1&quot; lovers.ext 这样就可以保证同一行中前后出现的一样。</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>多命令执行：<br>        command；command；….按顺序执行</li>
+<li>逻辑运算：<ul>
+<li>真（true，yes，on,1)</li>
+<li>假（false,no,off,0)</li>
+<li>与 &amp;&amp;</li>
+<li>或 ||</li>
+<li>非 ！</li>
 </ul>
 </li>
 </ul>
@@ -952,101 +873,6 @@
 <p><strong>Notes:</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">BASH特性和bash编程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:57:47" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="BASH特性和bash编程"><a href="#BASH特性和bash编程" class="headerlink" title="BASH特性和bash编程"></a>BASH特性和bash编程</h1><h4 id="bash-的特性"><a href="#bash-的特性" class="headerlink" title="bash 的特性"></a>bash 的特性</h4><ul>
-<li>命令行展开： ~，{}</li>
-<li>命令别名：alias,unalias</li>
-<li>命令历史：history</li>
-<li>文件名通配：glob</li>
-<li>快捷键：Ctrl+a,e,u,k,l</li>
-<li>命令补全</li>
-<li>路径补全</li>
-<li>命令hash，缓存之前命令的查找结果，用hash 可以查看</li>
-<li>变量</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">程序：数据+指令</span><br><span class="line">	指令：程序文件提供</span><br><span class="line">	数据：IO设备，文件，管道，变量</span><br><span class="line">bash是一种弱类型的编程语言，把所有变量视为字符传芳。并且变量无需事先声明。</span><br><span class="line">变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">变量名：包含数字，字母，下划线，同时不能以数字开头。</span><br><span class="line">变量类型：</span><br><span class="line">	本地变量：当前shell进程</span><br><span class="line">		变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">		&quot;&quot;:变量名会替换为值</span><br><span class="line">		&#x27;&#x27;：变量名不会替换为值</span><br><span class="line">		设置或者查看变量：set</span><br><span class="line">		撤销：unset var_name(不适用$)</span><br><span class="line">	环境变量：当前shell以及子shell</span><br><span class="line">		变量赋值：</span><br><span class="line">			1.export name=fu</span><br><span class="line">			2.name=fu</span><br><span class="line">			export name</span><br><span class="line">			3.declare -x name=fu</span><br><span class="line">		查看环境变量：export,declare -x printenv,env</span><br><span class="line">		撤销环境变量:unset var_name</span><br><span class="line">	局部变量：某个代码作用域</span><br><span class="line">	位置参数变量：向执行脚本的shell进程传递的参数</span><br><span class="line">	特殊变量：shell内置的由特殊功能的变量</span><br><span class="line">	</span><br><span class="line">	Notes:</span><br><span class="line">		设置为只读变量:readonly var_name或者declare -r var_name.</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>多命令执行：<br>        command；command；….按顺序执行</li>
-<li>逻辑运算：<ul>
-<li>真（true，yes，on,1)</li>
-<li>假（false,no,off,0)</li>
-<li>与 &amp;&amp;</li>
-<li>或 ||</li>
-<li>非 ！</li>
-</ul>
-</li>
-</ul>
 
       
     </div>
@@ -1229,7 +1055,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/shell%E8%84%9A%E6%9C%AC%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1243,7 +1069,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/27/shell%E8%84%9A%E6%9C%AC%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/" class="post-title-link" itemprop="url">shell脚本逻辑判断和参数传递</a>
+            <a href="/2024/01/27/grep%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">grep命令</a>
         </h2>
 
         <div class="post-meta">
@@ -1254,7 +1080,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:02:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:40" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1281,29 +1107,216 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="shell脚本逻辑判断和参数传递"><a href="#shell脚本逻辑判断和参数传递" class="headerlink" title="shell脚本逻辑判断和参数传递"></a>shell脚本逻辑判断和参数传递</h1><h4 id="向脚本传递参数"><a href="#向脚本传递参数" class="headerlink" title="向脚本传递参数"></a>向脚本传递参数</h4><ul>
-<li>位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数</li>
-<li>$1,$2,$3…${10},${11}</li>
-<li>shift n ，轮替前n个参数，踢掉</li>
-<li>特殊变量<ul>
-<li>$0,脚本路径本身</li>
-<li>$#,传递参数个数</li>
-<li>$@，所有参数</li>
-<li>$*,所有参数</li>
+          <h1 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h1><h4 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h4><ul>
+<li>grep 文本过滤工具</li>
+<li>sed sream editor,流编辑器，文本编辑工具</li>
+<li>awk 文本报告生成器，格式化文本</li>
+</ul>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p><strong>表示控制或通配的功能的特殊字符</strong></p>
+<ul>
+<li>基本正则表达式 BRE</li>
+<li>拓展正则表达式 ERE</li>
+<li>Notes</li>
+</ul>
+<h4 id="grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行"><a href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行" class="headerlink" title="grep:Global search ERgular expression and Print out the line(输出的是行)"></a>grep:Global search ERgular expression and Print out the line(输出的是行)</h4><ul>
+<li><p>文本搜索工具，根据用户指定的“模式”，对目标文本进行匹配检查，打印匹配到的行</p>
+</li>
+<li><p>模式：由正则表达式的元字符及文本字符所编写的过滤条件</p>
+</li>
+<li><p>格式： </p>
+<ul>
+<li><p>grep [options] Pattern [file]</p>
+</li>
+<li><p>grep [OPTIONS] -e PATTERN … [FILE…]</p>
+</li>
+<li><p>grep [OPTIONS] -f FILE … [FILE…]</p>
+</li>
+<li><p>OPTIONS:</p>
+<ul>
+<li>–color&#x3D;auto 文本着色</li>
+<li>-I ： Ignore 忽略大小写</li>
+<li>-O：只显示匹配到的文本</li>
+<li>-V ：反向匹配</li>
+<li>-E ：支持拓展的正则表达式</li>
+<li>-Q：–quiet 不输出任何信息</li>
+<li>-A#，-B#，-C#，输出上下的行，A后，B前，C前后</li>
+</ul>
+</li>
+<li><p>基本正则表达式的元字符</p>
+<ul>
+<li><p>字符匹配</p>
+<ul>
+<li>. 匹配任意单个字符</li>
+<li>[] 匹配指定范围内的任意单个字符</li>
+<li>[^] 匹配范围外的任意单个字符</li>
+<li>Notes（一个）<ul>
+<li>[:digit:]</li>
+<li>[:lower:]</li>
+<li>[:upper:]</li>
+<li>[:alpha:]</li>
+<li>[:alnum:] 包含数字的字母</li>
+<li>[:punct:] 所有标点符号</li>
+<li>[:space:] 空格</li>
 </ul>
 </li>
 </ul>
-<h4 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h4><ul>
-<li><p>选择执行</p>
+</li>
+<li><p>匹配次数：用在指定次数的字符的后面，用于限制次数.默认贪婪模式</p>
 <ul>
-<li>单分支</li>
+<li><p>*：任意次</p>
+</li>
+<li><p>.*:任意长度的任意字符</p>
+</li>
+<li><p>?:匹配前面的字符0次或1次</p>
+</li>
+<li><p>?:匹配前面的字符1次或多次</p>
+</li>
+<li><pre><code class="shell">\&#123;m\&#125;:匹配前面的字符m次
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&#123;m,n\&#125;：至少m次，至多n次</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>{0,n}:至多n次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  \&#123;m,\&#125;:至少m次</span><br></pre></td></tr></table></figure></li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if 测试条件；then （then可以写在下面,不带;）</span><br><span class="line">	代码分支</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>位置锁定</p>
+<ul>
+<li><p>^:行首锚定，用于模式的左边</p>
+</li>
+<li><p>$:行尾锚定，写在模式右边</p>
+</li>
+<li><p>^pattern$:pattern开口，pattern结尾</p>
+<ul>
+<li>^$:不包含任意字符</li>
+<li>^[[:space:]]*$:可以有空格的行</li>
+</ul>
+</li>
+<li><p>单词锚定，非特殊字符组成的连续字符，包括数字，都称为单词</p>
+<ul>
+<li><pre><code>\&lt;或\b词首锚定，用于单词的模式的左侧
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&gt;或\b词尾锚定，用于单词的右侧</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>&lt;pattern&gt;精确匹配单词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">- 分组以及引用</span><br><span class="line"></span><br><span class="line">  - 分组符号</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>()分组符号（括号）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 引用，分组括号中的模式匹配到的内容会被正则表达式自动记录下内部变量中</span><br><span class="line"></span><br><span class="line">  - \1，从左侧起，第一个括号匹配到的字符</span><br><span class="line">  - \2</span><br><span class="line">  - \3</span><br><span class="line">  - 等等</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  grep &quot;\(l..e\).*\1&quot; lovers.ext 这样就可以保证同一行中前后出现的一样。</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">sed命令详解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:01:01" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="sed命令详解"><a href="#sed命令详解" class="headerlink" title="sed命令详解"></a>sed命令详解</h1><h4 id="sed-字符流编辑器"><a href="#sed-字符流编辑器" class="headerlink" title="sed:字符流编辑器"></a>sed:字符流编辑器</h4><p><strong>工作流程：sed会读取文件里的行，然后缓存到sed模式空间，接着开始处理符合规则的行，不符合规则的行会输出到屏幕，符合规则的行也会输出到屏幕。在这个过程中，它只处理了缓存里的数据，没有修改原文件</strong></p>
+<p><strong>使用格式</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [options][sed内置命令字符] [输入文件]</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>双分支</li>
+<li>选项参数<ul>
+<li>-n 取消默认sed输出，常与内置命令p一起使用</li>
+<li>-i 将修改结果写入文件</li>
+<li>-e 多次编辑，不需要管道符</li>
+<li>-r 支持正则表达</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 测试条件；<span class="keyword">then</span></span><br><span class="line">	分支1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	分支2</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></li>
+</li>
+<li>sed内置命令字符<ul>
+<li>a 对文本 进行追加</li>
+<li>d 删除匹配行</li>
+<li>i 在指定行前插入一行或者多行文本</li>
+<li>p 打印匹配的内容，通常与-n一起使用  </li>
+<li>s&#x2F;被替换&#x2F;替换上的&#x2F;g 把前面的换成后面的，g代表全局</li>
+</ul>
+</li>
+<li>sed匹配范围（在内置命令前写上）<ul>
+<li>空地址 全文处理，什么都不写</li>
+<li>单地址 指定文件某一行，数字</li>
+<li>&#x2F;pattern&#x2F; 被模式匹配到的每一行</li>
+<li>范围区间 <ul>
+<li>10，20  十到二十行</li>
+<li>10，+5 第十行加上 向下5行</li>
+<li>&#x2F;pattern1&#x2F;,&#x2F;pattern2&#x2F;</li>
+</ul>
+</li>
+<li>步长<ul>
+<li>1~2 表示从第一行开始步长为2的行</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
       
@@ -1416,17 +1429,6 @@
 
 
       </div>
-      
-      <!-- require APlayer -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-    <!-- require MetingJS-->
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
-    <!--QQ音乐-->   
-    <meting-js
-   auto="https://y.qq.com/n/yqq/playlist/8090602172.html#stat=y_new.playlist.pic_click"
-   order="random">
-</meting-js>
 
     </div>
   </aside>
