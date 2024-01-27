@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Linux连接查看系统是否监听22端口 1ss -tnl  查看网卡信息 12345ifconfig或addr list或ip a  查看端口是否开启 123iptables -L -n临时关闭iptables -F   linux终端类型 串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。 伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux连接">
+<meta property="og:url" content="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux连接查看系统是否监听22端口 1ss -tnl  查看网卡信息 12345ifconfig或addr list或ip a  查看端口是否开启 123iptables -L -n临时关闭iptables -F   linux终端类型 串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。 伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mob">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-27T11:48:28.000Z">
+<meta property="article:modified_time" content="2024-01-27T11:59:11.960Z">
+<meta property="article:author" content="Fuff">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux连接 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux连接
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看网卡信息</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看端口是否开启</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
+<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
+<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
+</li>
+<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
+</li>
+<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
+<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
+<li><p>Cli接口：</p>
+<p>​	[fu@localhost ~]$</p>
+<p>​		fu:当前登录的用户</p>
+<p>​		localhost：主机名</p>
+<p>​		~：当前工作目录，相对路径</p>
+<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
+</li>
+</ul>
+<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
+<li>一切皆文件，几乎所有资源都抽象成文件</li>
+<li>由众多单一的程序组成</li>
+<li>进行避免和用户进行交互，以编程的方式实现</li>
+<li>使用文本文件保存配置信息</li>
+</ul>
+<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
+<li>层级结构,</li>
+<li>倒置树状结构</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/" rel="prev" title="Linux系统初识别">
+      <i class="fa fa-chevron-left"></i> Linux系统初识别
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">Linux连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E7%BB%88%E7%AB%AF%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">linux终端类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E7%AB%AF%E5%8F%A3%E7%BB%88%E7%AB%AF-x2F-dev-x2F-ttySn-%EF%BC%8C%E5%88%A9%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%9A%84%E7%BB%88%E7%AB%AF%E8%AE%BE%E5%A4%87%E3%80%82"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.0.0.2.1.</span> <span class="nav-text">查看接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%BA%A4%E4%BA%92%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">linux交互接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux%E5%93%B2%E5%AD%A6%E6%80%9D%E6%83%B3"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Linux哲学思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Fuff</p>
+  <div class="site-description" itemprop="description">Vanse的个人博客，创建于2023年2月5日。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hardwin3" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hardwin3" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1485662395@qq.com" title="E-Mail → mailto:1485662395@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+      
+      <!-- require APlayer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <!-- require MetingJS-->
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
+    <!--QQ音乐-->   
+    <meting-js
+   auto="https://y.qq.com/n/yqq/playlist/8090602172.html#stat=y_new.playlist.pic_click"
+   order="random">
+</meting-js>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fuff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

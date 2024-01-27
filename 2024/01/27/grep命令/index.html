@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="grep命令三剑客 grep 文本过滤工具 sed sream editor,流编辑器，文本编辑工具 awk 文本报告生成器，格式化文本  正则表达式表示控制或通配的功能的特殊字符  基本正则表达式 BRE 拓展正则表达式 ERE Notes  grep:Global search ERgular expression and Print out the line(输出的是行) 文本搜索工具，根据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grep命令">
+<meta property="og:url" content="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="grep命令三剑客 grep 文本过滤工具 sed sream editor,流编辑器，文本编辑工具 awk 文本报告生成器，格式化文本  正则表达式表示控制或通配的功能的特殊字符  基本正则表达式 BRE 拓展正则表达式 ERE Notes  grep:Global search ERgular expression and Print out the line(输出的是行) 文本搜索工具，根据">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-27T11:48:28.000Z">
+<meta property="article:modified_time" content="2024-01-27T11:58:40.461Z">
+<meta property="article:author" content="Fuff">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>grep命令 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          grep命令
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:40" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h1><h4 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h4><ul>
+<li>grep 文本过滤工具</li>
+<li>sed sream editor,流编辑器，文本编辑工具</li>
+<li>awk 文本报告生成器，格式化文本</li>
+</ul>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p><strong>表示控制或通配的功能的特殊字符</strong></p>
+<ul>
+<li>基本正则表达式 BRE</li>
+<li>拓展正则表达式 ERE</li>
+<li>Notes</li>
+</ul>
+<h4 id="grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行"><a href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行" class="headerlink" title="grep:Global search ERgular expression and Print out the line(输出的是行)"></a>grep:Global search ERgular expression and Print out the line(输出的是行)</h4><ul>
+<li><p>文本搜索工具，根据用户指定的“模式”，对目标文本进行匹配检查，打印匹配到的行</p>
+</li>
+<li><p>模式：由正则表达式的元字符及文本字符所编写的过滤条件</p>
+</li>
+<li><p>格式： </p>
+<ul>
+<li><p>grep [options] Pattern [file]</p>
+</li>
+<li><p>grep [OPTIONS] -e PATTERN … [FILE…]</p>
+</li>
+<li><p>grep [OPTIONS] -f FILE … [FILE…]</p>
+</li>
+<li><p>OPTIONS:</p>
+<ul>
+<li>–color&#x3D;auto 文本着色</li>
+<li>-I ： Ignore 忽略大小写</li>
+<li>-O：只显示匹配到的文本</li>
+<li>-V ：反向匹配</li>
+<li>-E ：支持拓展的正则表达式</li>
+<li>-Q：–quiet 不输出任何信息</li>
+<li>-A#，-B#，-C#，输出上下的行，A后，B前，C前后</li>
+</ul>
+</li>
+<li><p>基本正则表达式的元字符</p>
+<ul>
+<li><p>字符匹配</p>
+<ul>
+<li>. 匹配任意单个字符</li>
+<li>[] 匹配指定范围内的任意单个字符</li>
+<li>[^] 匹配范围外的任意单个字符</li>
+<li>Notes（一个）<ul>
+<li>[:digit:]</li>
+<li>[:lower:]</li>
+<li>[:upper:]</li>
+<li>[:alpha:]</li>
+<li>[:alnum:] 包含数字的字母</li>
+<li>[:punct:] 所有标点符号</li>
+<li>[:space:] 空格</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>匹配次数：用在指定次数的字符的后面，用于限制次数.默认贪婪模式</p>
+<ul>
+<li><p>*：任意次</p>
+</li>
+<li><p>.*:任意长度的任意字符</p>
+</li>
+<li><p>?:匹配前面的字符0次或1次</p>
+</li>
+<li><p>?:匹配前面的字符1次或多次</p>
+</li>
+<li><pre><code class="shell">\&#123;m\&#125;:匹配前面的字符m次
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&#123;m,n\&#125;：至少m次，至多n次</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>{0,n}:至多n次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  \&#123;m,\&#125;:至少m次</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>位置锁定</p>
+<ul>
+<li><p>^:行首锚定，用于模式的左边</p>
+</li>
+<li><p>$:行尾锚定，写在模式右边</p>
+</li>
+<li><p>^pattern$:pattern开口，pattern结尾</p>
+<ul>
+<li>^$:不包含任意字符</li>
+<li>^[[:space:]]*$:可以有空格的行</li>
+</ul>
+</li>
+<li><p>单词锚定，非特殊字符组成的连续字符，包括数字，都称为单词</p>
+<ul>
+<li><pre><code>\&lt;或\b词首锚定，用于单词的模式的左侧
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&gt;或\b词尾锚定，用于单词的右侧</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>&lt;pattern&gt;精确匹配单词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">- 分组以及引用</span><br><span class="line"></span><br><span class="line">  - 分组符号</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>()分组符号（括号）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 引用，分组括号中的模式匹配到的内容会被正则表达式自动记录下内部变量中</span><br><span class="line"></span><br><span class="line">  - \1，从左侧起，第一个括号匹配到的字符</span><br><span class="line">  - \2</span><br><span class="line">  - \3</span><br><span class="line">  - 等等</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  grep &quot;\(l..e\).*\1&quot; lovers.ext 这样就可以保证同一行中前后出现的一样。</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/27/linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%87%E6%8D%A2/" rel="prev" title="Linux下图形和命令行的切换">
+      <i class="fa fa-chevron-left"></i> Linux下图形和命令行的切换
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" rel="next" title="bash脚本编程思想和条件测试">
+      bash脚本编程思想和条件测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grep%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">grep命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%89%91%E5%AE%A2"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">三剑客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-%E8%BE%93%E5%87%BA%E7%9A%84%E6%98%AF%E8%A1%8C"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">grep:Global search ERgular expression and Print out the line(输出的是行)</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Fuff</p>
+  <div class="site-description" itemprop="description">Vanse的个人博客，创建于2023年2月5日。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/hardwin3" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;hardwin3" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1485662395@qq.com" title="E-Mail → mailto:1485662395@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+      
+      <!-- require APlayer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <!-- require MetingJS-->
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
+    <!--QQ音乐-->   
+    <meting-js
+   auto="https://y.qq.com/n/yqq/playlist/8090602172.html#stat=y_new.playlist.pic_click"
+   order="random">
+</meting-js>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fuff</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

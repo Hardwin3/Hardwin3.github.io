@@ -147,7 +147,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/25/%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%B5%8B%E9%80%9F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -161,7 +161,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/25/%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%B5%8B%E9%80%9F/" class="post-title-link" itemprop="url">硬盘读写测速</a>
+            <a href="/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Linux连接</a>
         </h2>
 
         <div class="post-meta">
@@ -172,7 +172,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-02-25 23:26:32 / Modified: 23:45:03" itemprop="dateCreated datePublished" datetime="2023-02-25T23:26:32+08:00">2023-02-25</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -199,13 +199,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>linux下使用dd命令进行简单测速</p>
-<h3 id="测试写入速度"><a href="#测试写入速度" class="headerlink" title="测试写入速度"></a>测试写入速度</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/mnt/filename bs=1M count=1024</span><br></pre></td></tr></table></figure>
+          <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
 
-<p>of后面跟着一个不存在的文件名，此命令会在&#x2F;mnt下写入一个名为filename，大小为1G的文件。此方法可以测试磁盘的读写速度。一样的道理，of后为硬盘挂载点时，测试所得写入速度就是硬盘的速度。</p>
-<h3 id="测试读取速度"><a href="#测试读取速度" class="headerlink" title="测试读取速度"></a>测试读取速度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/mnt/filename of=/dev/null bs=1M count=1024</span><br></pre></td></tr></table></figure>
+<p><strong>查看网卡信息</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
 
-<p>所得速度就是读取速度</p>
+<p><strong>查看端口是否开启</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
+<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
+<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
+</li>
+<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
+</li>
+<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
+<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
+<li><p>Cli接口：</p>
+<p>​	[fu@localhost ~]$</p>
+<p>​		fu:当前登录的用户</p>
+<p>​		localhost：主机名</p>
+<p>​		~：当前工作目录，相对路径</p>
+<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
+</li>
+</ul>
+<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
+<li>一切皆文件，几乎所有资源都抽象成文件</li>
+<li>由众多单一的程序组成</li>
+<li>进行避免和用户进行交互，以编程的方式实现</li>
+<li>使用文本文件保存配置信息</li>
+</ul>
+<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
+<li>层级结构,</li>
+<li>倒置树状结构</li>
+</ul>
 
       
     </div>
@@ -225,7 +256,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/05/my-first-article/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -239,7 +270,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/05/my-first-article/" class="post-title-link" itemprop="url">my first article</a>
+            <a href="/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/" class="post-title-link" itemprop="url">Linux系统初识别</a>
         </h2>
 
         <div class="post-meta">
@@ -248,27 +279,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2023-02-05 17:18:06" itemprop="dateCreated datePublished" datetime="2023-02-05T17:18:06+08:00">2023-02-05</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:00:20" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-06 09:08:16" itemprop="dateModified" datetime="2023-02-06T09:08:16+08:00">2023-02-06</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%89%93%E6%8B%9B%E5%91%BC/" itemprop="url" rel="index"><span itemprop="name">打招呼</span></a>
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%89%93%E6%8B%9B%E5%91%BC/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
                 </span>
             </span>
 
@@ -283,7 +308,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>This is my first article 请多关照</p>
+          <h1 id="Linux系统初识别"><a href="#Linux系统初识别" class="headerlink" title="Linux系统初识别"></a>Linux系统初识别</h1><p><strong>kernel:用来解决底层硬件的驱动，使程序员可以面对统一规范风格的接口进行对硬件的调用，进行编程</strong></p>
+<p><strong>libraries：对kernel的调用再一次进行封装,在库之上可以进行统一的，规范的代码编写。不同系统的库有所区别。</strong></p>
+<hr>
 
       
     </div>
@@ -303,7 +330,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/05/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/awk%E6%8A%80%E8%83%BD%E5%AE%9E%E6%88%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -317,7 +344,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/05/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2024/01/27/awk%E6%8A%80%E8%83%BD%E5%AE%9E%E6%88%98/" class="post-title-link" itemprop="url">awk技能实战</a>
         </h2>
 
         <div class="post-meta">
@@ -326,8 +353,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2023-02-05 16:40:43" itemprop="dateCreated datePublished" datetime="2023-02-05T16:40:43+08:00">2023-02-05</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:56:19" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
             </span>
 
           
@@ -341,19 +382,942 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <h1 id="awk技能实战"><a href="#awk技能实战" class="headerlink" title="awk技能实战"></a>awk技能实战</h1><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><ul>
+<li>数组声明  declare -a </li>
+<li>关联数组声明 declare -A</li>
+</ul>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><ul>
+<li>切片</li>
+<li>查找替换</li>
+<li>查找删除</li>
+<li>变量赋值</li>
+</ul>
+<h4 id="awk工具"><a href="#awk工具" class="headerlink" title="awk工具"></a>awk工具</h4><p><strong>文档报告生成器，格式化文本输出</strong></p>
+<ul>
+<li><p>基本用法 awk [options] ‘program’ file</p>
+<ul>
+<li><p>program:   PATTERN{ACTION STATEMENTS}，这里的PATTERN不是正则中的模式，而是内置的模式</p>
+<ul>
+<li><p>ACTION_STATEMENTSb </p>
+<ul>
+<li><p>expressions</p>
+</li>
+<li><p>Control statements</p>
+</li>
+<li><p>Compound statements</p>
+</li>
+<li><p>input statements</p>
+</li>
+<li><p>out statements</p>
+</li>
+<li><p>print    print item1,item2</p>
+</li>
+<li><p>printf 用法print FORMAT,item1,item2</p>
+<ul>
+<li>FORMAT必须给出</li>
+<li>printf不会自动换行</li>
+<li>FORMAT中需要为后面的每一个item指明一个格式化符号</li>
+<li>格式符<ul>
+<li>%c,显示ASCII码</li>
+<li>%d,%i，显示十进制整数</li>
+<li>%e,%E,科学计数法</li>
+<li>%f,浮点数</li>
+<li>%g,%G,科学计数法或者浮点数显示数值</li>
+<li>%s,显示字符串</li>
+<li>%u,无符号整数</li>
+<li>%%，显示为%自身</li>
+</ul>
+</li>
+<li>修饰符<ul>
+<li>%n.n,比如%15s,表示这个变量用15个位置显示</li>
+<li>-：左对齐 0</li>
+<li>+：显示数值的符号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>操作符</p>
+<ul>
+<li>算符运算操作符<ul>
+<li>x+y,x-y,x*y,x&#x2F;y,x%y</li>
+<li>-x,取负</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>+x,转化为数值</p>
+<ul>
+<li>赋值操作符 &#x3D;，+&#x3D;，-&#x3D;，*&#x3D;，%&#x3D;，%&#x3D;，……&#x3D;，++，–</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>比较操作符 &gt;,&gt;&#x3D;,&#x3D;&#x3D;,等等</p>
+<ul>
+<li><p>模式匹配符</p>
+<ul>
+<li>~，左边是否能被右侧匹配</li>
+<li>！~</li>
+</ul>
+</li>
+<li><p>逻辑 &amp;&amp; ||  ！</p>
+</li>
+<li><p>函数调用function_name(arg1,arg2,arg3)</p>
+</li>
+<li><p>条件表达式   判断条件?expression:expression三元表示式</p>
+</li>
+<li><p>PATTERN</p>
+<ul>
+<li>empty:空模式匹配每一行，不写出来就行</li>
+<li>&#x2F;regular expression&#x2F;:能被此处的模式匹配到的 </li>
+<li>relation expression ,关系表达式，结果有真有假，结果为真就处理，非0为真。非空字符串表示为真。</li>
+<li>line ranges,行范围&#x2F;pat1&#x2F;,&#x2F;pat2&#x2F;，不支持直接数字格式</li>
+<li>BEGIN&#x2F;END,BEGIN尽在开始处理文件中的文本之前执行一次，end仅仅在处理完成之后，命令结束之前执行一次。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F: &#x27;BEGIN&#123;print &quot;    name       uid  &quot;&#125;&#123;print $1,$3&#125;&#x27; /etc/passwd</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><strong>Notes:输出的item可以是字符串，也可以是数值，当前记录的字段，变量或awk表达式。想要变量替换，变量不能写在引号内</strong></p>
+<ul>
+<li>变量<ul>
+<li>内建变量（使用的时候不需要$）<ul>
+<li>FS，输入时分隔符，默认为空白</li>
+<li>OFS，输出时分隔符，默认为空白字符</li>
+<li>RS，输入的换行符</li>
+<li>ORS，输出时的换行符</li>
+<li>NF，每一行的字段数量</li>
+<li>NR,行数</li>
+<li>FNR，每一个文件进行单独计数</li>
+<li>FILENAME，当前文件名</li>
+<li>ARGC，命令行参数个数</li>
+<li>ARGV，数组，命令行中给定的各个参数</li>
+</ul>
+</li>
+<li>自定义变量<ul>
+<li>变量名一样区分大小写</li>
+<li>可以在program中直接定义，就是后面的{}，多个就用分号分隔</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>options</p>
+<ul>
+<li>-F ,指明输入时数据的字段分隔符</li>
+<li>-v: var&#x3D;value 自定义变量</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/" class="post-title-link" itemprop="url">arm64开发板上armbian换源报错解决</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:55:31" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192504488.png" alt="image-20240127192504488"></p>
+<p>结果 sudo apt update 却遇上了报错</p>
+<p><img src="C:\Users\14856\AppData\Roaming\Typora\typora-user-images\image-20240127192719981.png" alt="image-20240127192719981"></p>
+<p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
+<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
+
+<p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
+<p>所以解决方法就是用<strong>dpkg</strong>来移除这个amd64的额外架构。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ sudo dpkg --remove-architecture amd64</span><br><span class="line">ajin@CRRC:~$ sudo apt update</span><br><span class="line">命中:1 http://mirrors.tuna.tsinghua.edu.cn/armbian focal InRelease</span><br><span class="line">命中:2 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal InRelease</span><br><span class="line">命中:3 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates InRelease</span><br><span class="line">命中:4 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports InRelease</span><br><span class="line">命中:6 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal InRelease</span><br><span class="line">命中:7 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease</span><br><span class="line">命中:5 http://mirrors.ustc.edu.cn/armbian focal InRelease</span><br><span class="line">命中:8 https://download.docker.com/linux/ubuntu focal InRelease</span><br><span class="line">获取:9 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/universe armhf Packages [10.9 MB]</span><br><span class="line">获取:10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/restricted armhf Packages [10.8 kB]</span><br><span class="line">获取:11 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/main armhf Packages [1,227 kB]</span><br><span class="line">获取:12 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/multiverse armhf Packages [141 kB]</span><br><span class="line">获取:13 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/multiverse armhf Packages [9,898 B]</span><br><span class="line">获取:14 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/restricted armhf Packages [21.9 kB]</span><br><span class="line">获取:15 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/main armhf Packages [1,835 kB]</span><br><span class="line">获取:16 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/universe armhf Packages [1,172 kB]</span><br><span class="line">获取:17 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/universe armhf Packages [27.8 kB]</span><br><span class="line">获取:18 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/main armhf Packages [54.7 kB]</span><br><span class="line">获取:19 http://ports.ubuntu.com/ubuntu-ports focal-security/universe armhf Packages [887 kB]</span><br><span class="line">获取:20 http://ports.ubuntu.com/ubuntu-ports focal-security/multiverse armhf Packages [5,099 B]</span><br><span class="line">获取:21 http://ports.ubuntu.com/ubuntu-ports focal-security/main armhf Packages [1,475 kB]</span><br><span class="line">获取:22 http://ports.ubuntu.com/ubuntu-ports focal-security/restricted armhf Packages [21.6 kB]</span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树</span><br><span class="line">正在读取状态信息... 完成</span><br><span class="line">有 286 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</span><br></pre></td></tr></table></figure>
+
+<p>之后果然没有报错了。</p>
+<h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">bash中的函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:16" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="bash中的函数"><a href="#bash中的函数" class="headerlink" title="bash中的函数"></a>bash中的函数</h1><ul>
+<li><p>函数：把一段独立的代码当成一个整体，并为之一个名字。即为函数。</p>
+</li>
+<li><p>语法一</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_name&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f_name()&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数的声明周期:每次被调用时候创建，返回时候终止。状态返回结果是最后一条命令的状态结果。</p>
+<ul>
+<li>自定义状态返回值return n,0表示成功，1-255表示失败。</li>
+</ul>
+</li>
+<li><p>传递给参数的函数</p>
+<ul>
+<li>在函数体当中可以使用$1,$2…引用传给函数的参数，也可以$*,$@引用所有参数，@#i引用传递给函数的参数的个数</li>
+<li>在引用函数时，用空白分隔参数即可，也可以（arg1,arg2..）</li>
+</ul>
+</li>
+<li><p>变量作用域</p>
+<ul>
+<li>局部变量，在函数内部定义的变量，在函数结束时自动销毁<ul>
+<li>定义方法： local VAR&#x3D;value</li>
+</ul>
+</li>
+<li>本地变量， 作用域是运行脚本shell的声明周期</li>
+</ul>
+</li>
+<li><p>函数递归</p>
+</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">BASH特性和bash编程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:57:47" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="BASH特性和bash编程"><a href="#BASH特性和bash编程" class="headerlink" title="BASH特性和bash编程"></a>BASH特性和bash编程</h1><h4 id="bash-的特性"><a href="#bash-的特性" class="headerlink" title="bash 的特性"></a>bash 的特性</h4><ul>
+<li>命令行展开： ~，{}</li>
+<li>命令别名：alias,unalias</li>
+<li>命令历史：history</li>
+<li>文件名通配：glob</li>
+<li>快捷键：Ctrl+a,e,u,k,l</li>
+<li>命令补全</li>
+<li>路径补全</li>
+<li>命令hash，缓存之前命令的查找结果，用hash 可以查看</li>
+<li>变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">程序：数据+指令</span><br><span class="line">	指令：程序文件提供</span><br><span class="line">	数据：IO设备，文件，管道，变量</span><br><span class="line">bash是一种弱类型的编程语言，把所有变量视为字符传芳。并且变量无需事先声明。</span><br><span class="line">变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">变量名：包含数字，字母，下划线，同时不能以数字开头。</span><br><span class="line">变量类型：</span><br><span class="line">	本地变量：当前shell进程</span><br><span class="line">		变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">		&quot;&quot;:变量名会替换为值</span><br><span class="line">		&#x27;&#x27;：变量名不会替换为值</span><br><span class="line">		设置或者查看变量：set</span><br><span class="line">		撤销：unset var_name(不适用$)</span><br><span class="line">	环境变量：当前shell以及子shell</span><br><span class="line">		变量赋值：</span><br><span class="line">			1.export name=fu</span><br><span class="line">			2.name=fu</span><br><span class="line">			export name</span><br><span class="line">			3.declare -x name=fu</span><br><span class="line">		查看环境变量：export,declare -x printenv,env</span><br><span class="line">		撤销环境变量:unset var_name</span><br><span class="line">	局部变量：某个代码作用域</span><br><span class="line">	位置参数变量：向执行脚本的shell进程传递的参数</span><br><span class="line">	特殊变量：shell内置的由特殊功能的变量</span><br><span class="line">	</span><br><span class="line">	Notes:</span><br><span class="line">		设置为只读变量:readonly var_name或者declare -r var_name.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多命令执行：<br>        command；command；….按顺序执行</li>
+<li>逻辑运算：<ul>
+<li>真（true，yes，on,1)</li>
+<li>假（false,no,off,0)</li>
+<li>与 &amp;&amp;</li>
+<li>或 ||</li>
+<li>非 ！</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">bash脚本编程思想和条件测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:56:57" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="bash脚本编程思想和条件测试"><a href="#bash脚本编程思想和条件测试" class="headerlink" title="bash脚本编程思想和条件测试"></a>bash脚本编程思想和条件测试</h1><ul>
+<li><p>数据类型</p>
+<ul>
+<li>字符型</li>
+<li>数值型</li>
+</ul>
+</li>
+<li><p>算术运算</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+,-,*,/,**</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>let VAR&#x3D;expression</li>
+<li>VAR&#x3D;$[expression]</li>
+<li>VAR&#x3D;$((expression))</li>
+<li>VAR&#x3D;$(expr argu1 argu2)</li>
+</ul>
+</li>
+<li><p>增强型赋值</p>
+<ul>
+<li><pre><code>+=，-=，*=，/=,%=
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 要用let 描述， let i+=#</span><br><span class="line"></span><br><span class="line">  - let VAR++</span><br><span class="line"></span><br><span class="line">- 条件测试</span><br><span class="line"></span><br><span class="line">  - 判断需求是否满足，需要由测试机制来实现</span><br><span class="line"></span><br><span class="line">  - 如何编写测试表达式以实现所需测试</span><br><span class="line"></span><br><span class="line">    - 执行命令，并利用命令状态返回值来判断</span><br><span class="line">      - 0成功</span><br><span class="line">      - 1失败</span><br><span class="line">    - 测试表达式</span><br><span class="line">      - test expression</span><br><span class="line">      - [ expression ]必须有空格</span><br><span class="line">      - [[ expression ]]----关键字</span><br><span class="line"></span><br><span class="line">  - 数值测试：数值比较</span><br><span class="line"></span><br><span class="line">    - -eq : 是否等于 $num1 -eq $num2</span><br><span class="line">    - -ne : 不等于</span><br><span class="line">    - -gt :是否大于</span><br><span class="line">    - -ge : 是否大于等于</span><br><span class="line">    - -lt：是否小于</span><br><span class="line">    - -le: 是否小于等于</span><br><span class="line"></span><br><span class="line">  - 字符串设置：</span><br><span class="line"></span><br><span class="line">    - ==：等值比较符号</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">      &gt;:是否大于，外边尽可能使用双括号</span><br></pre></td></tr></table></figure>
+
+- ```
+  &lt;:是否小于
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  != 是否不等于</span><br></pre></td></tr></table></figure>
+
+- -z&quot;string&quot;:判断指定的字符串是否为空，空则为真
+
+- -n&quot;string&quot;:判断是否不为空。空为假
+
+- =~：左侧能否被右边的pattern匹配，匹配左边的一部分字符
+
+- Notes：和变量比两边加“ ”，防止空字符串
+</code></pre>
+</li>
+<li><p>文件测试</p>
+<ul>
+<li>-a 或-e FILE，[-e FILE],是否存在</li>
+<li>-b,是否存在且为块设备</li>
+<li>-c,是否存在且为 字符设备文件</li>
+<li>-d,目录文件</li>
+<li>-f ,普通文件</li>
+<li>-h ,符号连接文件</li>
+<li>-p 命名管道文件</li>
+<li>-S,套接字文件</li>
+<li>权限测试<ul>
+<li>-r,是否存在并且当前用户可读</li>
+<li>-w,可写</li>
+<li>-x,可执行</li>
+</ul>
+</li>
+<li>特殊权限测试<ul>
+<li>-g,存在并且拥有suld权限</li>
+<li>-u,是否存在且拥有sgld权限</li>
+<li>-k,sticky权限</li>
+</ul>
+</li>
+<li>内容测试<ul>
+<li>-s,是否为空，空为假</li>
+</ul>
+</li>
+<li>时间戳测试<ul>
+<li>-N，上次读取后是否被修改过</li>
+</ul>
+</li>
+<li>从属关系测试<ul>
+<li>-Q，当前文件是否是文件的属主</li>
+<li>-G,当前用户胡是否为文件的属组</li>
+</ul>
+</li>
+<li>双目测试<ul>
+<li>FILE1－ef FILE2 , FILE2和FILE2是否指向统一文件系统的相同Inode的硬链接</li>
+<li>FILE1 -nt FILE2,FILE1是否新与FILE 2</li>
+<li>FILE1 -ot FILE2,FILE1是否旧与FILE 2</li>
+</ul>
+</li>
+<li>逻辑运算<ul>
+<li>&amp;&amp; || ！</li>
+<li>[ EXPRESSION -a EXPRESSION ] 并且</li>
+<li>[ expression -o expression ]</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>脚本的状态返回值：最后执行的命令的返回值</p>
+<ul>
+<li>自定义状态返回值，exit[n],n自定义，返回n。shell遇到exit[n]立马终止</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/grep%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">grep命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:40" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h1><h4 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h4><ul>
+<li>grep 文本过滤工具</li>
+<li>sed sream editor,流编辑器，文本编辑工具</li>
+<li>awk 文本报告生成器，格式化文本</li>
+</ul>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p><strong>表示控制或通配的功能的特殊字符</strong></p>
+<ul>
+<li>基本正则表达式 BRE</li>
+<li>拓展正则表达式 ERE</li>
+<li>Notes</li>
+</ul>
+<h4 id="grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行"><a href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行" class="headerlink" title="grep:Global search ERgular expression and Print out the line(输出的是行)"></a>grep:Global search ERgular expression and Print out the line(输出的是行)</h4><ul>
+<li><p>文本搜索工具，根据用户指定的“模式”，对目标文本进行匹配检查，打印匹配到的行</p>
+</li>
+<li><p>模式：由正则表达式的元字符及文本字符所编写的过滤条件</p>
+</li>
+<li><p>格式： </p>
+<ul>
+<li><p>grep [options] Pattern [file]</p>
+</li>
+<li><p>grep [OPTIONS] -e PATTERN … [FILE…]</p>
+</li>
+<li><p>grep [OPTIONS] -f FILE … [FILE…]</p>
+</li>
+<li><p>OPTIONS:</p>
+<ul>
+<li>–color&#x3D;auto 文本着色</li>
+<li>-I ： Ignore 忽略大小写</li>
+<li>-O：只显示匹配到的文本</li>
+<li>-V ：反向匹配</li>
+<li>-E ：支持拓展的正则表达式</li>
+<li>-Q：–quiet 不输出任何信息</li>
+<li>-A#，-B#，-C#，输出上下的行，A后，B前，C前后</li>
+</ul>
+</li>
+<li><p>基本正则表达式的元字符</p>
+<ul>
+<li><p>字符匹配</p>
+<ul>
+<li>. 匹配任意单个字符</li>
+<li>[] 匹配指定范围内的任意单个字符</li>
+<li>[^] 匹配范围外的任意单个字符</li>
+<li>Notes（一个）<ul>
+<li>[:digit:]</li>
+<li>[:lower:]</li>
+<li>[:upper:]</li>
+<li>[:alpha:]</li>
+<li>[:alnum:] 包含数字的字母</li>
+<li>[:punct:] 所有标点符号</li>
+<li>[:space:] 空格</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>匹配次数：用在指定次数的字符的后面，用于限制次数.默认贪婪模式</p>
+<ul>
+<li><p>*：任意次</p>
+</li>
+<li><p>.*:任意长度的任意字符</p>
+</li>
+<li><p>?:匹配前面的字符0次或1次</p>
+</li>
+<li><p>?:匹配前面的字符1次或多次</p>
+</li>
+<li><pre><code class="shell">\&#123;m\&#125;:匹配前面的字符m次
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&#123;m,n\&#125;：至少m次，至多n次</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>{0,n}:至多n次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  \&#123;m,\&#125;:至少m次</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>位置锁定</p>
+<ul>
+<li><p>^:行首锚定，用于模式的左边</p>
+</li>
+<li><p>$:行尾锚定，写在模式右边</p>
+</li>
+<li><p>^pattern$:pattern开口，pattern结尾</p>
+<ul>
+<li>^$:不包含任意字符</li>
+<li>^[[:space:]]*$:可以有空格的行</li>
+</ul>
+</li>
+<li><p>单词锚定，非特殊字符组成的连续字符，包括数字，都称为单词</p>
+<ul>
+<li><pre><code>\&lt;或\b词首锚定，用于单词的模式的左侧
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&gt;或\b词尾锚定，用于单词的右侧</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>&#96;&#96;&#96;<br>&lt;pattern&gt;精确匹配单词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">- 分组以及引用</span><br><span class="line"></span><br><span class="line">  - 分组符号</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>()分组符号（括号）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 引用，分组括号中的模式匹配到的内容会被正则表达式自动记录下内部变量中</span><br><span class="line"></span><br><span class="line">  - \1，从左侧起，第一个括号匹配到的字符</span><br><span class="line">  - \2</span><br><span class="line">  - \3</span><br><span class="line">  - 等等</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  grep &quot;\(l..e\).*\1&quot; lovers.ext 这样就可以保证同一行中前后出现的一样。</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%87%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%87%E6%8D%A2/" class="post-title-link" itemprop="url">Linux下图形和命令行的切换</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:59" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Linux下图形和命令行的切换"><a href="#Linux下图形和命令行的切换" class="headerlink" title="Linux下图形和命令行的切换"></a>Linux下图形和命令行的切换</h3><h6 id="图形切换命令行"><a href="#图形切换命令行" class="headerlink" title="图形切换命令行"></a>图形切换命令行</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-default multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h6 id="命令行切换图形"><a href="#命令行切换图形" class="headerlink" title="命令行切换图形"></a>命令行切换图形</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-default graphical.target</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">sed命令详解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:01:01" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="sed命令详解"><a href="#sed命令详解" class="headerlink" title="sed命令详解"></a>sed命令详解</h1><h4 id="sed-字符流编辑器"><a href="#sed-字符流编辑器" class="headerlink" title="sed:字符流编辑器"></a>sed:字符流编辑器</h4><p><strong>工作流程：sed会读取文件里的行，然后缓存到sed模式空间，接着开始处理符合规则的行，不符合规则的行会输出到屏幕，符合规则的行也会输出到屏幕。在这个过程中，它只处理了缓存里的数据，没有修改原文件</strong></p>
+<p><strong>使用格式</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [options][sed内置命令字符] [输入文件]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>选项参数<ul>
+<li>-n 取消默认sed输出，常与内置命令p一起使用</li>
+<li>-i 将修改结果写入文件</li>
+<li>-e 多次编辑，不需要管道符</li>
+<li>-r 支持正则表达</li>
+</ul>
+</li>
+<li>sed内置命令字符<ul>
+<li>a 对文本 进行追加</li>
+<li>d 删除匹配行</li>
+<li>i 在指定行前插入一行或者多行文本</li>
+<li>p 打印匹配的内容，通常与-n一起使用  </li>
+<li>s&#x2F;被替换&#x2F;替换上的&#x2F;g 把前面的换成后面的，g代表全局</li>
+</ul>
+</li>
+<li>sed匹配范围（在内置命令前写上）<ul>
+<li>空地址 全文处理，什么都不写</li>
+<li>单地址 指定文件某一行，数字</li>
+<li>&#x2F;pattern&#x2F; 被模式匹配到的每一行</li>
+<li>范围区间 <ul>
+<li>10，20  十到二十行</li>
+<li>10，+5 第十行加上 向下5行</li>
+<li>&#x2F;pattern1&#x2F;,&#x2F;pattern2&#x2F;</li>
+</ul>
+</li>
+<li>步长<ul>
+<li>1~2 表示从第一行开始步长为2的行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -371,6 +1335,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -435,17 +1402,17 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -491,7 +1458,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
