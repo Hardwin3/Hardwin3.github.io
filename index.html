@@ -331,6 +331,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/" class="post-title-link" itemprop="url">arm64开发板上armbian换源报错解决</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 23:21:02" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="https://s2.loli.net/2024/01/27/RhyIlGEUHoN68Pg.png"></p>
+<p>结果 sudo apt update 却遇上了报错</p>
+<p><img src="https://s2.loli.net/2024/01/27/TGj5RzSo2YkepgC.png"></p>
+<p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
+<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
+
+<p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
+<p>所以解决方法就是用<strong>dpkg</strong>来移除这个amd64的额外架构。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ sudo dpkg --remove-architecture amd64</span><br><span class="line">ajin@CRRC:~$ sudo apt update</span><br><span class="line">命中:1 http://mirrors.tuna.tsinghua.edu.cn/armbian focal InRelease</span><br><span class="line">命中:2 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal InRelease</span><br><span class="line">命中:3 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates InRelease</span><br><span class="line">命中:4 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports InRelease</span><br><span class="line">命中:6 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal InRelease</span><br><span class="line">命中:7 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease</span><br><span class="line">命中:5 http://mirrors.ustc.edu.cn/armbian focal InRelease</span><br><span class="line">命中:8 https://download.docker.com/linux/ubuntu focal InRelease</span><br><span class="line">获取:9 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/universe armhf Packages [10.9 MB]</span><br><span class="line">获取:10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/restricted armhf Packages [10.8 kB]</span><br><span class="line">获取:11 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/main armhf Packages [1,227 kB]</span><br><span class="line">获取:12 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/multiverse armhf Packages [141 kB]</span><br><span class="line">获取:13 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/multiverse armhf Packages [9,898 B]</span><br><span class="line">获取:14 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/restricted armhf Packages [21.9 kB]</span><br><span class="line">获取:15 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/main armhf Packages [1,835 kB]</span><br><span class="line">获取:16 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/universe armhf Packages [1,172 kB]</span><br><span class="line">获取:17 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/universe armhf Packages [27.8 kB]</span><br><span class="line">获取:18 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/main armhf Packages [54.7 kB]</span><br><span class="line">获取:19 http://ports.ubuntu.com/ubuntu-ports focal-security/universe armhf Packages [887 kB]</span><br><span class="line">获取:20 http://ports.ubuntu.com/ubuntu-ports focal-security/multiverse armhf Packages [5,099 B]</span><br><span class="line">获取:21 http://ports.ubuntu.com/ubuntu-ports focal-security/main armhf Packages [1,475 kB]</span><br><span class="line">获取:22 http://ports.ubuntu.com/ubuntu-ports focal-security/restricted armhf Packages [21.6 kB]</span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树</span><br><span class="line">正在读取状态信息... 完成</span><br><span class="line">有 286 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</span><br></pre></td></tr></table></figure>
+
+<p>之后果然没有报错了。</p>
+<h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -405,7 +490,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -419,7 +504,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/" class="post-title-link" itemprop="url">arm64开发板上armbian换源报错解决</a>
+            <a href="/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">bash中的函数</a>
         </h2>
 
         <div class="post-meta">
@@ -430,7 +515,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 23:21:02" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:16" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -457,19 +542,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"><a href="#arm64开发板上armbian换源报错E-无法下载-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443" class="headerlink" title="arm64开发板上armbian换源报错E: 无法下载 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages  404  Not Found [IP: 101.6.15.130 443]"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]</h4><h5 id="sources-list如图"><a href="#sources-list如图" class="headerlink" title="sources.list如图"></a>sources.list如图</h5><p><img src="https://s2.loli.net/2024/01/27/RhyIlGEUHoN68Pg.png"></p>
-<p>结果 sudo apt update 却遇上了报错</p>
-<p><img src="https://s2.loli.net/2024/01/27/TGj5RzSo2YkepgC.png"></p>
-<p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
-<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ dpkg --print-foreign-architectures</span><br><span class="line">armhf</span><br><span class="line">amd64</span><br></pre></td></tr></table></figure>
-
-<p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
-<p>所以解决方法就是用<strong>dpkg</strong>来移除这个amd64的额外架构。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ajin@CRRC:~$ sudo dpkg --remove-architecture amd64</span><br><span class="line">ajin@CRRC:~$ sudo apt update</span><br><span class="line">命中:1 http://mirrors.tuna.tsinghua.edu.cn/armbian focal InRelease</span><br><span class="line">命中:2 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal InRelease</span><br><span class="line">命中:3 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates InRelease</span><br><span class="line">命中:4 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports InRelease</span><br><span class="line">命中:6 http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal InRelease</span><br><span class="line">命中:7 http://ports.ubuntu.com/ubuntu-ports focal-security InRelease</span><br><span class="line">命中:5 http://mirrors.ustc.edu.cn/armbian focal InRelease</span><br><span class="line">命中:8 https://download.docker.com/linux/ubuntu focal InRelease</span><br><span class="line">获取:9 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/universe armhf Packages [10.9 MB]</span><br><span class="line">获取:10 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/restricted armhf Packages [10.8 kB]</span><br><span class="line">获取:11 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/main armhf Packages [1,227 kB]</span><br><span class="line">获取:12 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal/multiverse armhf Packages [141 kB]</span><br><span class="line">获取:13 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/multiverse armhf Packages [9,898 B]</span><br><span class="line">获取:14 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/restricted armhf Packages [21.9 kB]</span><br><span class="line">获取:15 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/main armhf Packages [1,835 kB]</span><br><span class="line">获取:16 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-updates/universe armhf Packages [1,172 kB]</span><br><span class="line">获取:17 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/universe armhf Packages [27.8 kB]</span><br><span class="line">获取:18 https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports focal-backports/main armhf Packages [54.7 kB]</span><br><span class="line">获取:19 http://ports.ubuntu.com/ubuntu-ports focal-security/universe armhf Packages [887 kB]</span><br><span class="line">获取:20 http://ports.ubuntu.com/ubuntu-ports focal-security/multiverse armhf Packages [5,099 B]</span><br><span class="line">获取:21 http://ports.ubuntu.com/ubuntu-ports focal-security/main armhf Packages [1,475 kB]</span><br><span class="line">获取:22 http://ports.ubuntu.com/ubuntu-ports focal-security/restricted armhf Packages [21.6 kB]</span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树</span><br><span class="line">正在读取状态信息... 完成</span><br><span class="line">有 286 个软件包可以升级。请执行 ‘apt list --upgradable’ 来查看它们。</span><br></pre></td></tr></table></figure>
-
-<p>之后果然没有报错了。</p>
-<h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+          <h1 id="bash中的函数"><a href="#bash中的函数" class="headerlink" title="bash中的函数"></a>bash中的函数</h1><ul>
+<li><p>函数：把一段独立的代码当成一个整体，并为之一个名字。即为函数。</p>
+</li>
+<li><p>语法一</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_name&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f_name()&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数的声明周期:每次被调用时候创建，返回时候终止。状态返回结果是最后一条命令的状态结果。</p>
+<ul>
+<li>自定义状态返回值return n,0表示成功，1-255表示失败。</li>
+</ul>
+</li>
+<li><p>传递给参数的函数</p>
+<ul>
+<li>在函数体当中可以使用$1,$2…引用传给函数的参数，也可以$*,$@引用所有参数，@#i引用传递给函数的参数的个数</li>
+<li>在引用函数时，用空白分隔参数即可，也可以（arg1,arg2..）</li>
+</ul>
+</li>
+<li><p>变量作用域</p>
+<ul>
+<li>局部变量，在函数内部定义的变量，在函数结束时自动销毁<ul>
+<li>定义方法： local VAR&#x3D;value</li>
+</ul>
+</li>
+<li>本地变量， 作用域是运行脚本shell的声明周期</li>
+</ul>
+</li>
+<li><p>函数递归</p>
+</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
 
 
       
@@ -767,112 +873,6 @@
 </ul>
 </li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">bash中的函数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:16" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="bash中的函数"><a href="#bash中的函数" class="headerlink" title="bash中的函数"></a>bash中的函数</h1><ul>
-<li><p>函数：把一段独立的代码当成一个整体，并为之一个名字。即为函数。</p>
-</li>
-<li><p>语法一</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_name&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f_name()&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数的声明周期:每次被调用时候创建，返回时候终止。状态返回结果是最后一条命令的状态结果。</p>
-<ul>
-<li>自定义状态返回值return n,0表示成功，1-255表示失败。</li>
-</ul>
-</li>
-<li><p>传递给参数的函数</p>
-<ul>
-<li>在函数体当中可以使用$1,$2…引用传给函数的参数，也可以$*,$@引用所有参数，@#i引用传递给函数的参数的个数</li>
-<li>在引用函数时，用空白分隔参数即可，也可以（arg1,arg2..）</li>
-</ul>
-</li>
-<li><p>变量作用域</p>
-<ul>
-<li>局部变量，在函数内部定义的变量，在函数结束时自动销毁<ul>
-<li>定义方法： local VAR&#x3D;value</li>
-</ul>
-</li>
-<li>本地变量， 作用域是运行脚本shell的声明周期</li>
-</ul>
-</li>
-<li><p>函数递归</p>
-</li>
-</ul>
-<p><strong>Notes:</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -1229,7 +1229,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/shell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%87%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1243,7 +1243,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/27/shell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">shell脚本编程实现</a>
+            <a href="/2024/01/27/linux%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E5%88%87%E6%8D%A2/" class="post-title-link" itemprop="url">Linux下图形和命令行的切换</a>
         </h2>
 
         <div class="post-meta">
@@ -1254,7 +1254,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:01:22" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:59" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1281,74 +1281,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="shell脚本编程实现"><a href="#shell脚本编程实现" class="headerlink" title="shell脚本编程实现"></a>shell脚本编程实现</h2><h4 id="根据其编程过程中调用库还是调用外部的程序文件"><a href="#根据其编程过程中调用库还是调用外部的程序文件" class="headerlink" title="根据其编程过程中调用库还是调用外部的程序文件"></a>根据其编程过程中调用库还是调用外部的程序文件</h4><ul>
-<li><p>shell脚本编程</p>
-<p>​	利用系统上的命令及编程组件进行编程</p>
-</li>
-<li><p>完整编程</p>
-<p>​	利用库或编程组件进行编程</p>
-</li>
-</ul>
-<p><strong>shell脚本编程：过程式编程，解释运行，依赖于外部程序文件运行</strong></p>
-<h4 id="如何写shell脚本"><a href="#如何写shell脚本" class="headerlink" title="如何写shell脚本"></a>如何写shell脚本</h4><ul>
-<li><p>第一行顶格写shebang,解释器路径，用于指明解释执行当前脚本的解释器程序文件如</p>
-<ul>
-<li>#!&#x2F;bin&#x2F;bash</li>
-<li>#!&#x2F;usr&#x2F;bin&#x2F;python</li>
-<li>#!&#x2F;usr&#x2F;bin&#x2F;perl</li>
-</ul>
-<p>Notes:</p>
-<p>​		所以xx.sh其实是一个文本文件，运行这个文件真正的过程是内核读取了文件前面的内容，并用bash去运行文本里的内容。所以当bash xx.sh时，xx.sh并不需要+x权限。</p>
-<p>​		脚本中的空白行和#开头的行都会被忽略，除了shebang.</p>
-</li>
-<li><p>文本编辑器</p>
-<ul>
-<li>行编辑器：sed</li>
-<li>全屏幕编辑器：nano ,vi,vim</li>
-</ul>
-</li>
-<li><p>bash的配置文件</p>
-<ul>
-<li><p>profile类：为交互式登录的shell提供配置，交互式：通过某终端输入账号密码登录打开的shell；通过su - username或 su -l username打开的终端；</p>
-<p>​	全局：对所有用户都生效；</p>
-<p>​			&#x2F;etc&#x2F;profile</p>
-<p>​			&#x2F;etc&#x2F;profile.d&#x2F;*.sh</p>
-<p>​	局部：对单个用户生效</p>
-<p>​			~&#x2F;.bash_profile</p>
-<p>​	功用：</p>
-<p>​			用于定义环境变脸</p>
-<p>​			运行命令或脚本</p>
-</li>
-<li><p>bashrc类：为非交互式登录的shell提供配置，非交互式：su username;在图形界面打开的终端；运行脚本的时候的子shell；</p>
-<p>​	全局：</p>
-<p>​			&#x2F;etc&#x2F;bashrc</p>
-<p>​	用户个人：</p>
-<p>​			~&#x2F;.bashrc</p>
-<p>​	功用：</p>
-<p>​			定义本地变量</p>
-<p>​			定义命令别名</p>
-<p>​	交互式登录shell进程：<br>​				&#x2F;etc&#x2F;profile—-&gt;&gt;&#x2F;etc&#x2F;profile.d&#x2F;*——-&gt;<del>&#x2F;.bash_proflie——&gt;</del>&#x2F;.bashrc——&gt;&#x2F;etc&#x2F;bashrc</p>
-<p>​	非交互的shell:</p>
-<p>​				~&#x2F;.bashrc——&gt;&#x2F;etc&#x2F;bashrc——&gt;&#x2F;etc&#x2F;profile.d&#x2F;*</p>
-<p>​</p>
-</li>
-</ul>
-<p>	</p>
-</li>
-<li><p>命令行定义的特性，在当前shell有效</p>
-</li>
-<li><p>配置文件定义的特性，在下一次有效</p>
-<ul>
-<li>通过命令行重新定义一次</li>
-<li>重新加载一次配置文件<ul>
-<li>source </li>
-<li>.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>​	</p>
+          <h3 id="Linux下图形和命令行的切换"><a href="#Linux下图形和命令行的切换" class="headerlink" title="Linux下图形和命令行的切换"></a>Linux下图形和命令行的切换</h3><h6 id="图形切换命令行"><a href="#图形切换命令行" class="headerlink" title="图形切换命令行"></a>图形切换命令行</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-default multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h6 id="命令行切换图形"><a href="#命令行切换图形" class="headerlink" title="命令行切换图形"></a>命令行切换图形</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl set-default graphical.target</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
