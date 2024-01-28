@@ -222,115 +222,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Linux连接</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看网卡信息</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看端口是否开启</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
-<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
-<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
-</li>
-<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
-</li>
-<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
-<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
-<li><p>Cli接口：</p>
-<p>​	[fu@localhost ~]$</p>
-<p>​		fu:当前登录的用户</p>
-<p>​		localhost：主机名</p>
-<p>​		~：当前工作目录，相对路径</p>
-<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
-</li>
-</ul>
-<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
-<li>一切皆文件，几乎所有资源都抽象成文件</li>
-<li>由众多单一的程序组成</li>
-<li>进行避免和用户进行交互，以编程的方式实现</li>
-<li>使用文本文件保存配置信息</li>
-</ul>
-<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
-<li>层级结构,</li>
-<li>倒置树状结构</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -396,186 +287,6 @@
 
 <p>之后果然没有报错了。</p>
 <h5 id="另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包"><a href="#另外一种解决方法是在-x2F-etc-x2F-apt-x2F-sources-list中去指定自己需要的架构的软件包" class="headerlink" title="另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包"></a>另外一种解决方法是在&#x2F;etc&#x2F;apt&#x2F;sources.list中去指定自己需要的架构的软件包</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb [arch=arm64] https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ focal main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/" class="post-title-link" itemprop="url">Linux系统初识别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:00:20" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Linux系统初识别"><a href="#Linux系统初识别" class="headerlink" title="Linux系统初识别"></a>Linux系统初识别</h1><p><strong>kernel:用来解决底层硬件的驱动，使程序员可以面对统一规范风格的接口进行对硬件的调用，进行编程</strong></p>
-<p><strong>libraries：对kernel的调用再一次进行封装,在库之上可以进行统一的，规范的代码编写。不同系统的库有所区别。</strong></p>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">bash中的函数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:16" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="bash中的函数"><a href="#bash中的函数" class="headerlink" title="bash中的函数"></a>bash中的函数</h1><ul>
-<li><p>函数：把一段独立的代码当成一个整体，并为之一个名字。即为函数。</p>
-</li>
-<li><p>语法一</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_name&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f_name()&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数的声明周期:每次被调用时候创建，返回时候终止。状态返回结果是最后一条命令的状态结果。</p>
-<ul>
-<li>自定义状态返回值return n,0表示成功，1-255表示失败。</li>
-</ul>
-</li>
-<li><p>传递给参数的函数</p>
-<ul>
-<li>在函数体当中可以使用$1,$2…引用传给函数的参数，也可以$*,$@引用所有参数，@#i引用传递给函数的参数的个数</li>
-<li>在引用函数时，用空白分隔参数即可，也可以（arg1,arg2..）</li>
-</ul>
-</li>
-<li><p>变量作用域</p>
-<ul>
-<li>局部变量，在函数内部定义的变量，在函数结束时自动销毁<ul>
-<li>定义方法： local VAR&#x3D;value</li>
-</ul>
-</li>
-<li>本地变量， 作用域是运行脚本shell的声明周期</li>
-</ul>
-</li>
-<li><p>函数递归</p>
-</li>
-</ul>
-<p><strong>Notes:</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
 
 
       
@@ -778,6 +489,295 @@
 </ul>
 </li>
 </ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Linux连接</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看网卡信息</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看端口是否开启</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
+<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
+<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
+</li>
+<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
+</li>
+<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
+<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
+<li><p>Cli接口：</p>
+<p>​	[fu@localhost ~]$</p>
+<p>​		fu:当前登录的用户</p>
+<p>​		localhost：主机名</p>
+<p>​		~：当前工作目录，相对路径</p>
+<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
+</li>
+</ul>
+<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
+<li>一切皆文件，几乎所有资源都抽象成文件</li>
+<li>由众多单一的程序组成</li>
+<li>进行避免和用户进行交互，以编程的方式实现</li>
+<li>使用文本文件保存配置信息</li>
+</ul>
+<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
+<li>层级结构,</li>
+<li>倒置树状结构</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/" class="post-title-link" itemprop="url">Linux系统初识别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 20:00:20" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux系统初识别"><a href="#Linux系统初识别" class="headerlink" title="Linux系统初识别"></a>Linux系统初识别</h1><p><strong>kernel:用来解决底层硬件的驱动，使程序员可以面对统一规范风格的接口进行对硬件的调用，进行编程</strong></p>
+<p><strong>libraries：对kernel的调用再一次进行封装,在库之上可以进行统一的，规范的代码编写。不同系统的库有所区别。</strong></p>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">bash中的函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:16" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="bash中的函数"><a href="#bash中的函数" class="headerlink" title="bash中的函数"></a>bash中的函数</h1><ul>
+<li><p>函数：把一段独立的代码当成一个整体，并为之一个名字。即为函数。</p>
+</li>
+<li><p>语法一</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function f_name&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f_name()&#123;</span><br><span class="line">	函数体</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>函数的声明周期:每次被调用时候创建，返回时候终止。状态返回结果是最后一条命令的状态结果。</p>
+<ul>
+<li>自定义状态返回值return n,0表示成功，1-255表示失败。</li>
+</ul>
+</li>
+<li><p>传递给参数的函数</p>
+<ul>
+<li>在函数体当中可以使用$1,$2…引用传给函数的参数，也可以$*,$@引用所有参数，@#i引用传递给函数的参数的个数</li>
+<li>在引用函数时，用空白分隔参数即可，也可以（arg1,arg2..）</li>
+</ul>
+</li>
+<li><p>变量作用域</p>
+<ul>
+<li>局部变量，在函数内部定义的变量，在函数结束时自动销毁<ul>
+<li>定义方法： local VAR&#x3D;value</li>
+</ul>
+</li>
+<li>本地变量， 作用域是运行脚本shell的声明周期</li>
+</ul>
+</li>
+<li><p>函数递归</p>
+</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1424,6 +1424,26 @@
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
