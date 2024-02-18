@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Vanse的个人博客，创建于2023年2月5日。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/hexo/index.html">
+  <meta name="description" content="前言准备面试时候的记录 使用 &#x3D;&#x3D; 比较Java中的8种基本数据类型（byte,short,char,int,long,float,double,boolean）比较他们之间的值是否相等。引用数据类型，比较的是他们在堆内存地址是否相等。每新new一个引用类型的对象，会重新分配堆内存空间，使用&#x3D;&#x3D;比较返回false。 使用 equals 比较equals方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中的&#x3D;&#x3D;和equals">
+<meta property="og:url" content="http://example.com/2024/02/18/java%E4%B8%AD%E7%9A%84-%E5%92%8Cequals/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Vanse的个人博客，创建于2023年2月5日。">
+<meta property="og:description" content="前言准备面试时候的记录 使用 &#x3D;&#x3D; 比较Java中的8种基本数据类型（byte,short,char,int,long,float,double,boolean）比较他们之间的值是否相等。引用数据类型，比较的是他们在堆内存地址是否相等。每新new一个引用类型的对象，会重新分配堆内存空间，使用&#x3D;&#x3D;比较返回false。 使用 equals 比较equals方">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-18T08:08:21.000Z">
+<meta property="article:modified_time" content="2024-02-18T16:36:51.143Z">
 <meta property="article:author" content="Fuff">
+<meta property="article:tag" content="-java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/tags/hexo/">
+<link rel="canonical" href="http://example.com/2024/02/18/java%E4%B8%AD%E7%9A%84-%E5%92%8Cequals/">
 
 
 <script id="page-configurations">
@@ -38,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Tag: hexo | Hexo</title>
+  <title>java中的==和equals | Hexo</title>
   
 
 
@@ -141,51 +144,113 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">hexo
-          <small>Tag</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/18/java%E4%B8%AD%E7%9A%84-%E5%92%8Cequals/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java中的==和equals
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-18 16:08:21" itemprop="dateCreated datePublished" datetime="2024-02-18T16:08:21+08:00">2024-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-19 00:36:51" itemprop="dateModified" datetime="2024-02-19T00:36:51+08:00">2024-02-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0-%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">-学习 -面试</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+        <hr>
+<hr>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>准备面试时候的记录</p>
+<h4 id="使用-x3D-x3D-比较"><a href="#使用-x3D-x3D-比较" class="headerlink" title="使用 &#x3D;&#x3D; 比较"></a>使用 &#x3D;&#x3D; 比较</h4><p>Java中的8种基本数据类型（byte,short,char,int,long,float,double,boolean）比较他们之间的值是否相等。<br>引用数据类型，比较的是他们在堆内存地址是否相等。每新new一个引用类型的对象，会重新分配堆内存空间，使用&#x3D;&#x3D;比较返回false。</p>
+<h4 id="使用-equals-比较"><a href="#使用-equals-比较" class="headerlink" title="使用 equals 比较"></a>使用 equals 比较</h4><p>equals方法是Object类的一个方法，Java当中所有的类都是继承于Object这个超类。<br>JDK1.8 Object类equals方法源码如下，即返回结果取决于两个对象的使用&#x3D;&#x3D;判断结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="需要注意的例子"><a href="#需要注意的例子" class="headerlink" title="需要注意的例子"></a>需要注意的例子</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;abc&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;abc&quot;</span>;</span><br><span class="line">System.out.println(s1 == s2);</span><br></pre></td></tr></table></figure>
+
+<p>返回的是true,因为在”abc”在第一次赋值的时候就存在了变量池中，所以在第二次“abc”被赋值给s2的时候，直接将s2指向了“abc”的同一内存地址。所以返回true。</p>
+<h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/meism5/article/details/89029475">&#x3D;&#x3D; 和 equals 的区别_&#x3D;&#x3D;和equals的区别-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/weibanggang/p/9457757.html">java中equals以及&#x3D;&#x3D;的用法(简单介绍) - 韦邦杠 - 博客园 (cnblogs.com)</a></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-02-05T17:18:06+08:00"
-              content="2023-02-05">
-          02-05
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># -java</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/02/05/my-first-article/" itemprop="url">
-            <span itemprop="name">my first article</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/27/ssh-%E8%BF%9E%E6%8E%A5github%E8%B6%85%E6%97%B6%E8%A7%A3%E5%86%B3/" rel="prev" title="ssh 连接github超时解决">
+      <i class="fa fa-chevron-left"></i> ssh 连接github超时解决
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -238,6 +303,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-x3D-x3D-%E6%AF%94%E8%BE%83"><span class="nav-number">1.1.</span> <span class="nav-text">使用 &#x3D;&#x3D; 比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-equals-%E6%AF%94%E8%BE%83"><span class="nav-number">1.2.</span> <span class="nav-text">使用 equals 比较</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">需要注意的例子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.3.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
