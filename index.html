@@ -147,6 +147,159 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/21/%E5%85%B3%E4%BA%8Eh-length-1-%E7%9A%84%E6%8E%A2%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/21/%E5%85%B3%E4%BA%8Eh-length-1-%E7%9A%84%E6%8E%A2%E7%A9%B6/" class="post-title-link" itemprop="url">关于h&(length-1)的探究</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-21 11:02:11 / Modified: 11:06:12" itemprop="dateCreated datePublished" datetime="2024-02-21T11:02:11+08:00">2024-02-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0-%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">-学习 -面试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在探究hashmap原理中计算数组位置一部分遇到了用h&amp;(length-1)来替代h%length的问题，不解前者的原理，所以探究了一下。以下摘自文心一言。</p>
+<h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>在表达式 <code>return h &amp; (length-1)</code> 中，<code>h</code> 是一个哈希值（通常是一个较大的整数），而 <code>length-1</code> 是一个掩码（mask），用于将 <code>h</code> 限制在 <code>0</code> 到 <code>length-1</code> 的范围内。这个表达式是位运算中的一个常见技巧，用于快速地将一个整数映射到一个固定大小的数组或列表的索引。</p>
+<p>为了理解这个表达式如何工作，让我们再次考虑 <code>h</code> 和 <code>length-1</code> 的二进制表示。假设 <code>length</code> 是一个2的幂，例如 <code>length = 2^n</code>，那么 <code>length-1</code> 就是 <code>2^n - 1</code>。这个数在二进制中表示为 <code>n</code> 个1，从最低位到第 <code>n</code> 位。</p>
+<p>例如，如果 <code>length = 8</code>（即 <code>2^3</code>），则 <code>length-1 = 7</code>，其二进制表示为 <code>0111</code>（假设我们在一个足够大的位数中考虑，比如8位，则为 <code>00000111</code>）。</p>
+<p>现在，假设 <code>h</code> 是一个任意的哈希值，其二进制表示可能看起来像这样（以8位为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h = 10101010</span><br></pre></td></tr></table></figure>
+
+<p>当我们执行 <code>h &amp; (length-1)</code> 时，我们实际上是在执行以下按位与操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10101010 (h)  </span><br><span class="line">&amp; 00000111 (length-1)  </span><br><span class="line">----------  </span><br><span class="line">  00000010 (result)</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，只有 <code>h</code> 的最低三位与 <code>length-1</code> 的相应位相匹配，因此结果是 <code>00000010</code>，即十进制中的 <code>2</code>。这个值现在可以用作数组或列表的索引，因为它已经被限制在 <code>0</code> 到 <code>length-1</code>（即 <code>0</code> 到 <code>7</code>）的范围内。</p>
+<p>这种技术的一个关键前提是 <code>length</code> 必须是2的幂。如果 <code>length</code> 不是2的幂，那么 <code>length-1</code> 的二进制表示将不会有一系列连续的1，这可能导致哈希冲突或索引超出数组边界。当 <code>length</code> 是2的幂时，<code>length-1</code> 的二进制表示将有一系列连续的1，这可以确保 <code>h</code> 的任何位模式都会被映射到一个有效的索引。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/19/%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88hashCode-%E7%9B%B8%E5%90%8Cequals-%E8%BF%94%E5%9B%9Efalse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/19/%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88hashCode-%E7%9B%B8%E5%90%8Cequals-%E8%BF%94%E5%9B%9Efalse/" class="post-title-link" itemprop="url">关于为什么hashCode()相同equals()返回false</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-02-19 09:02:46 / Modified: 10:59:28" itemprop="dateCreated datePublished" datetime="2024-02-19T09:02:46+08:00">2024-02-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0-%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">-学习 -面试</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr>
+<hr>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在学习hashCode()的时候发现hashCode（）值相同，两个对象返回的equals也不一定相同，这里的equals（）关注的是内容的比较。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> <span class="string">&quot;适量&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> <span class="string">&quot;通话&quot;</span>;</span><br><span class="line">System.out.println(String.format(<span class="string">&quot;str1：%d | str2：%d&quot;</span>,str1.hashCode(),str2.hashCode());</span><br><span class="line">System.out.println(str1.equals(str2));</span><br></pre></td></tr></table></figure>
+
+<p>执行结果发现hashCode()返回值相同，equals()返回的却是false,因为hash值相同并不能确定两个对象在内容上是相同的。hash是一种单向密码体制，即它是一个从明文到密文的不可逆的映射，只有加密过程，没有解密过程。同时，哈希函数可以将任意长度的输入经过变化以后得到固定长度的输出。哈希函数的这种单向特征和输出数据长度固定的特征使得它可以生成消息或者数据。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/18/java%E4%B8%AD%E7%9A%84-%E5%92%8Cequals/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -973,343 +1126,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">bash脚本编程思想和条件测试</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:56:57" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="bash脚本编程思想和条件测试"><a href="#bash脚本编程思想和条件测试" class="headerlink" title="bash脚本编程思想和条件测试"></a>bash脚本编程思想和条件测试</h1><ul>
-<li><p>数据类型</p>
-<ul>
-<li>字符型</li>
-<li>数值型</li>
-</ul>
-</li>
-<li><p>算术运算</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+,-,*,/,**</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>let VAR&#x3D;expression</li>
-<li>VAR&#x3D;$[expression]</li>
-<li>VAR&#x3D;$((expression))</li>
-<li>VAR&#x3D;$(expr argu1 argu2)</li>
-</ul>
-</li>
-<li><p>增强型赋值</p>
-<ul>
-<li><pre><code>+=，-=，*=，/=,%=
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 要用let 描述， let i+=#</span><br><span class="line"></span><br><span class="line">  - let VAR++</span><br><span class="line"></span><br><span class="line">- 条件测试</span><br><span class="line"></span><br><span class="line">  - 判断需求是否满足，需要由测试机制来实现</span><br><span class="line"></span><br><span class="line">  - 如何编写测试表达式以实现所需测试</span><br><span class="line"></span><br><span class="line">    - 执行命令，并利用命令状态返回值来判断</span><br><span class="line">      - 0成功</span><br><span class="line">      - 1失败</span><br><span class="line">    - 测试表达式</span><br><span class="line">      - test expression</span><br><span class="line">      - [ expression ]必须有空格</span><br><span class="line">      - [[ expression ]]----关键字</span><br><span class="line"></span><br><span class="line">  - 数值测试：数值比较</span><br><span class="line"></span><br><span class="line">    - -eq : 是否等于 $num1 -eq $num2</span><br><span class="line">    - -ne : 不等于</span><br><span class="line">    - -gt :是否大于</span><br><span class="line">    - -ge : 是否大于等于</span><br><span class="line">    - -lt：是否小于</span><br><span class="line">    - -le: 是否小于等于</span><br><span class="line"></span><br><span class="line">  - 字符串设置：</span><br><span class="line"></span><br><span class="line">    - ==：等值比较符号</span><br><span class="line"></span><br><span class="line">    - ```</span><br><span class="line">      &gt;:是否大于，外边尽可能使用双括号</span><br></pre></td></tr></table></figure>
-
-- ```
-  &lt;:是否小于
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  != 是否不等于</span><br></pre></td></tr></table></figure>
-
-- -z&quot;string&quot;:判断指定的字符串是否为空，空则为真
-
-- -n&quot;string&quot;:判断是否不为空。空为假
-
-- =~：左侧能否被右边的pattern匹配，匹配左边的一部分字符
-
-- Notes：和变量比两边加“ ”，防止空字符串
-</code></pre>
-</li>
-<li><p>文件测试</p>
-<ul>
-<li>-a 或-e FILE，[-e FILE],是否存在</li>
-<li>-b,是否存在且为块设备</li>
-<li>-c,是否存在且为 字符设备文件</li>
-<li>-d,目录文件</li>
-<li>-f ,普通文件</li>
-<li>-h ,符号连接文件</li>
-<li>-p 命名管道文件</li>
-<li>-S,套接字文件</li>
-<li>权限测试<ul>
-<li>-r,是否存在并且当前用户可读</li>
-<li>-w,可写</li>
-<li>-x,可执行</li>
-</ul>
-</li>
-<li>特殊权限测试<ul>
-<li>-g,存在并且拥有suld权限</li>
-<li>-u,是否存在且拥有sgld权限</li>
-<li>-k,sticky权限</li>
-</ul>
-</li>
-<li>内容测试<ul>
-<li>-s,是否为空，空为假</li>
-</ul>
-</li>
-<li>时间戳测试<ul>
-<li>-N，上次读取后是否被修改过</li>
-</ul>
-</li>
-<li>从属关系测试<ul>
-<li>-Q，当前文件是否是文件的属主</li>
-<li>-G,当前用户胡是否为文件的属组</li>
-</ul>
-</li>
-<li>双目测试<ul>
-<li>FILE1－ef FILE2 , FILE2和FILE2是否指向统一文件系统的相同Inode的硬链接</li>
-<li>FILE1 -nt FILE2,FILE1是否新与FILE 2</li>
-<li>FILE1 -ot FILE2,FILE1是否旧与FILE 2</li>
-</ul>
-</li>
-<li>逻辑运算<ul>
-<li>&amp;&amp; || ！</li>
-<li>[ EXPRESSION -a EXPRESSION ] 并且</li>
-<li>[ expression -o expression ]</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>脚本的状态返回值：最后执行的命令的返回值</p>
-<ul>
-<li>自定义状态返回值，exit[n],n自定义，返回n。shell遇到exit[n]立马终止</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/grep%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/27/grep%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">grep命令</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:58:40" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h1><h4 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h4><ul>
-<li>grep 文本过滤工具</li>
-<li>sed sream editor,流编辑器，文本编辑工具</li>
-<li>awk 文本报告生成器，格式化文本</li>
-</ul>
-<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p><strong>表示控制或通配的功能的特殊字符</strong></p>
-<ul>
-<li>基本正则表达式 BRE</li>
-<li>拓展正则表达式 ERE</li>
-<li>Notes</li>
-</ul>
-<h4 id="grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行"><a href="#grep-Global-search-ERgular-expression-and-Print-out-the-line-输出的是行" class="headerlink" title="grep:Global search ERgular expression and Print out the line(输出的是行)"></a>grep:Global search ERgular expression and Print out the line(输出的是行)</h4><ul>
-<li><p>文本搜索工具，根据用户指定的“模式”，对目标文本进行匹配检查，打印匹配到的行</p>
-</li>
-<li><p>模式：由正则表达式的元字符及文本字符所编写的过滤条件</p>
-</li>
-<li><p>格式： </p>
-<ul>
-<li><p>grep [options] Pattern [file]</p>
-</li>
-<li><p>grep [OPTIONS] -e PATTERN … [FILE…]</p>
-</li>
-<li><p>grep [OPTIONS] -f FILE … [FILE…]</p>
-</li>
-<li><p>OPTIONS:</p>
-<ul>
-<li>–color&#x3D;auto 文本着色</li>
-<li>-I ： Ignore 忽略大小写</li>
-<li>-O：只显示匹配到的文本</li>
-<li>-V ：反向匹配</li>
-<li>-E ：支持拓展的正则表达式</li>
-<li>-Q：–quiet 不输出任何信息</li>
-<li>-A#，-B#，-C#，输出上下的行，A后，B前，C前后</li>
-</ul>
-</li>
-<li><p>基本正则表达式的元字符</p>
-<ul>
-<li><p>字符匹配</p>
-<ul>
-<li>. 匹配任意单个字符</li>
-<li>[] 匹配指定范围内的任意单个字符</li>
-<li>[^] 匹配范围外的任意单个字符</li>
-<li>Notes（一个）<ul>
-<li>[:digit:]</li>
-<li>[:lower:]</li>
-<li>[:upper:]</li>
-<li>[:alpha:]</li>
-<li>[:alnum:] 包含数字的字母</li>
-<li>[:punct:] 所有标点符号</li>
-<li>[:space:] 空格</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>匹配次数：用在指定次数的字符的后面，用于限制次数.默认贪婪模式</p>
-<ul>
-<li><p>*：任意次</p>
-</li>
-<li><p>.*:任意长度的任意字符</p>
-</li>
-<li><p>?:匹配前面的字符0次或1次</p>
-</li>
-<li><p>?:匹配前面的字符1次或多次</p>
-</li>
-<li><pre><code class="shell">\&#123;m\&#125;:匹配前面的字符m次
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&#123;m,n\&#125;：至少m次，至多n次</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>&#96;&#96;&#96;<br>{0,n}:至多n次</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  \&#123;m,\&#125;:至少m次</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>位置锁定</p>
-<ul>
-<li><p>^:行首锚定，用于模式的左边</p>
-</li>
-<li><p>$:行尾锚定，写在模式右边</p>
-</li>
-<li><p>^pattern$:pattern开口，pattern结尾</p>
-<ul>
-<li>^$:不包含任意字符</li>
-<li>^[[:space:]]*$:可以有空格的行</li>
-</ul>
-</li>
-<li><p>单词锚定，非特殊字符组成的连续字符，包括数字，都称为单词</p>
-<ul>
-<li><pre><code>\&lt;或\b词首锚定，用于单词的模式的左侧
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  \&gt;或\b词尾锚定，用于单词的右侧</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>&#96;&#96;&#96;<br>&lt;pattern&gt;精确匹配单词</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">- 分组以及引用</span><br><span class="line"></span><br><span class="line">  - 分组符号</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>()分组符号（括号）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 引用，分组括号中的模式匹配到的内容会被正则表达式自动记录下内部变量中</span><br><span class="line"></span><br><span class="line">  - \1，从左侧起，第一个括号匹配到的字符</span><br><span class="line">  - \2</span><br><span class="line">  - \3</span><br><span class="line">  - 等等</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  grep &quot;\(l..e\).*\1&quot; lovers.ext 这样就可以保证同一行中前后出现的一样。</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1379,7 +1195,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

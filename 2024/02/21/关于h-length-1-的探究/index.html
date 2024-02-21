@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Linux连接查看系统是否监听22端口 1ss -tnl  查看网卡信息 12345ifconfig或addr list或ip a  查看端口是否开启 123iptables -L -n临时关闭iptables -F   linux终端类型 串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。 伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mob">
+  <meta name="description" content="前言在探究hashmap原理中计算数组位置一部分遇到了用h&amp;(length-1)来替代h%length的问题，不解前者的原理，所以探究了一下。以下摘自文心一言。 正文在表达式 return h &amp; (length-1) 中，h 是一个哈希值（通常是一个较大的整数），而 length-1 是一个掩码（mask），用于将 h 限制在 0 到 length-1 的范围内。这个表达式是位">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux连接">
-<meta property="og:url" content="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:title" content="关于h&amp;(length-1)的探究">
+<meta property="og:url" content="http://example.com/2024/02/21/%E5%85%B3%E4%BA%8Eh-length-1-%E7%9A%84%E6%8E%A2%E7%A9%B6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Linux连接查看系统是否监听22端口 1ss -tnl  查看网卡信息 12345ifconfig或addr list或ip a  查看端口是否开启 123iptables -L -n临时关闭iptables -F   linux终端类型 串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。 伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mob">
+<meta property="og:description" content="前言在探究hashmap原理中计算数组位置一部分遇到了用h&amp;(length-1)来替代h%length的问题，不解前者的原理，所以探究了一下。以下摘自文心一言。 正文在表达式 return h &amp; (length-1) 中，h 是一个哈希值（通常是一个较大的整数），而 length-1 是一个掩码（mask），用于将 h 限制在 0 到 length-1 的范围内。这个表达式是位">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-01-27T11:48:28.000Z">
-<meta property="article:modified_time" content="2024-01-27T11:59:11.960Z">
+<meta property="article:published_time" content="2024-02-21T03:02:11.000Z">
+<meta property="article:modified_time" content="2024-02-21T03:06:12.810Z">
 <meta property="article:author" content="Fuff">
-<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="-java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+<link rel="canonical" href="http://example.com/2024/02/21/%E5%85%B3%E4%BA%8Eh-length-1-%E7%9A%84%E6%8E%A2%E7%A9%B6/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Linux连接 | Hexo</title>
+  <title>关于h&(length-1)的探究 | Hexo</title>
   
 
 
@@ -151,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/27/Linux%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/02/21/%E5%85%B3%E4%BA%8Eh-length-1-%E7%9A%84%E6%8E%A2%E7%A9%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linux连接
+          关于h&(length-1)的探究
         </h1>
 
         <div class="post-meta">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-01-27 19:48:28 / Modified: 19:59:11" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+              <time title="Created: 2024-02-21 11:02:11 / Modified: 11:06:12" itemprop="dateCreated datePublished" datetime="2024-02-21T11:02:11+08:00">2024-02-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -183,11 +183,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0-%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">-学习 -面试</span></a>
                 </span>
             </span>
 
@@ -209,44 +205,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Linux连接"><a href="#Linux连接" class="headerlink" title="Linux连接"></a>Linux连接</h1><p><strong>查看系统是否监听22端口</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ss -tnl</span><br></pre></td></tr></table></figure>
+        <hr>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在探究hashmap原理中计算数组位置一部分遇到了用h&amp;(length-1)来替代h%length的问题，不解前者的原理，所以探究了一下。以下摘自文心一言。</p>
+<h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>在表达式 <code>return h &amp; (length-1)</code> 中，<code>h</code> 是一个哈希值（通常是一个较大的整数），而 <code>length-1</code> 是一个掩码（mask），用于将 <code>h</code> 限制在 <code>0</code> 到 <code>length-1</code> 的范围内。这个表达式是位运算中的一个常见技巧，用于快速地将一个整数映射到一个固定大小的数组或列表的索引。</p>
+<p>为了理解这个表达式如何工作，让我们再次考虑 <code>h</code> 和 <code>length-1</code> 的二进制表示。假设 <code>length</code> 是一个2的幂，例如 <code>length = 2^n</code>，那么 <code>length-1</code> 就是 <code>2^n - 1</code>。这个数在二进制中表示为 <code>n</code> 个1，从最低位到第 <code>n</code> 位。</p>
+<p>例如，如果 <code>length = 8</code>（即 <code>2^3</code>），则 <code>length-1 = 7</code>，其二进制表示为 <code>0111</code>（假设我们在一个足够大的位数中考虑，比如8位，则为 <code>00000111</code>）。</p>
+<p>现在，假设 <code>h</code> 是一个任意的哈希值，其二进制表示可能看起来像这样（以8位为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">h = 10101010</span><br></pre></td></tr></table></figure>
 
-<p><strong>查看网卡信息</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br><span class="line">或</span><br><span class="line">addr list</span><br><span class="line">或</span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
+<p>当我们执行 <code>h &amp; (length-1)</code> 时，我们实际上是在执行以下按位与操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10101010 (h)  </span><br><span class="line">&amp; 00000111 (length-1)  </span><br><span class="line">----------  </span><br><span class="line">  00000010 (result)</span><br></pre></td></tr></table></figure>
 
-<p><strong>查看端口是否开启</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br><span class="line">临时关闭</span><br><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="linux终端类型"><a href="#linux终端类型" class="headerlink" title="linux终端类型"></a>linux终端类型</h4><ul>
-<li><h4 id="串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。"><a href="#串行端口终端-x2F-dev-x2F-ttySn-，利用计算机串口连接的终端设备。" class="headerlink" title="串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。"></a>串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</h4></li>
-<li><p><strong>伪终端（&#x2F;dev&#x2F;pts&#x2F;#)如mobaxterm里虚拟出来的终端。</strong></p>
-</li>
-<li><p><strong>虚拟终端(&#x2F;dev&#x2F;tty#[1-6]</strong></p>
-</li>
-<li><p><strong>物理终端（&#x2F;dev&#x2F;console)</strong></p>
-<h5 id="查看接口"><a href="#查看接口" class="headerlink" title="查看接口"></a><strong>查看接口</strong></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="linux交互接口"><a href="#linux交互接口" class="headerlink" title="linux交互接口"></a>linux交互接口</h4><ul>
-<li><p>Cli接口：</p>
-<p>​	[fu@localhost ~]$</p>
-<p>​		fu:当前登录的用户</p>
-<p>​		localhost：主机名</p>
-<p>​		~：当前工作目录，相对路径</p>
-<p>​		#：命令提示符，#为管理员账号，为root，$表示普通用户</p>
-</li>
-</ul>
-<h4 id="Linux哲学思想"><a href="#Linux哲学思想" class="headerlink" title="Linux哲学思想"></a>Linux哲学思想</h4><ul>
-<li>一切皆文件，几乎所有资源都抽象成文件</li>
-<li>由众多单一的程序组成</li>
-<li>进行避免和用户进行交互，以编程的方式实现</li>
-<li>使用文本文件保存配置信息</li>
-</ul>
-<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
-<li>层级结构,</li>
-<li>倒置树状结构</li>
-</ul>
+<p>在这个例子中，只有 <code>h</code> 的最低三位与 <code>length-1</code> 的相应位相匹配，因此结果是 <code>00000010</code>，即十进制中的 <code>2</code>。这个值现在可以用作数组或列表的索引，因为它已经被限制在 <code>0</code> 到 <code>length-1</code>（即 <code>0</code> 到 <code>7</code>）的范围内。</p>
+<p>这种技术的一个关键前提是 <code>length</code> 必须是2的幂。如果 <code>length</code> 不是2的幂，那么 <code>length-1</code> 的二进制表示将不会有一系列连续的1，这可能导致哈希冲突或索引超出数组边界。当 <code>length</code> 是2的幂时，<code>length-1</code> 的二进制表示将有一系列连续的1，这可以确保 <code>h</code> 的任何位模式都会被映射到一个有效的索引。</p>
 
     </div>
 
@@ -256,7 +227,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/java/" rel="tag"># -java</a>
           </div>
 
         
@@ -265,13 +236,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/01/27/Linux%E7%B3%BB%E7%BB%9F%E5%88%9D%E8%AF%86%E5%88%AB/" rel="prev" title="Linux系统初识别">
-      <i class="fa fa-chevron-left"></i> Linux系统初识别
+    <a href="/2024/02/19/%E5%85%B3%E4%BA%8E%E4%B8%BA%E4%BB%80%E4%B9%88hashCode-%E7%9B%B8%E5%90%8Cequals-%E8%BF%94%E5%9B%9Efalse/" rel="prev" title="关于为什么hashCode()相同equals()返回false">
+      <i class="fa fa-chevron-left"></i> 关于为什么hashCode()相同equals()返回false
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/01/27/awk%E6%8A%80%E8%83%BD%E5%AE%9E%E6%88%98/" rel="next" title="awk技能实战">
-      awk技能实战 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -330,7 +298,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">Linux连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E7%BB%88%E7%AB%AF%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">linux终端类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E7%AB%AF%E5%8F%A3%E7%BB%88%E7%AB%AF-x2F-dev-x2F-ttySn-%EF%BC%8C%E5%88%A9%E7%94%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%9A%84%E7%BB%88%E7%AB%AF%E8%AE%BE%E5%A4%87%E3%80%82"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">串行端口终端(&#x2F;dev&#x2F;ttySn)，利用计算机串口连接的终端设备。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.0.0.2.1.</span> <span class="nav-text">查看接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%BA%A4%E4%BA%92%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">linux交互接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux%E5%93%B2%E5%AD%A6%E6%80%9D%E6%83%B3"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">Linux哲学思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">文件系统</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

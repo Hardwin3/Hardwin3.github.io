@@ -147,6 +147,180 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/" class="post-title-link" itemprop="url">数据库第二章兼习题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-03 18:09:13" itemprop="dateCreated datePublished" datetime="2023-03-03T18:09:13+08:00">2023-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-01-27 23:28:16" itemprop="dateModified" datetime="2024-01-27T23:28:16+08:00">2024-01-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BE%E5%86%85%E5%BF%85%E4%BF%AE-%E5%A4%8D%E4%B9%A0%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">-课内必修 -复习总结</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>关系数据库是支持关系模型的数据库系统，关系模型分为关系数据结构，关系操作集合和关系完整性约束。2.1将给出关系数据结构的形式化定义，2.2将介绍关系操作，2.3讲解三类完整性约束，2.4以及2.5讲解关系代数和关系演算</p>
+<h5 id="2-1"><a href="#2-1" class="headerlink" title="2.1"></a>2.1</h5><p>域：具有相同的的数据类型的值的集合称为域。域内允许的不同取值个数称为域的基数。</p>
+<p>笛卡尔积：笛卡尔积是域的取值的全组合。</p>
+<p>关系：笛卡尔积的子集称为关系，可按照属性的个数分为单元，二元，多元关系。如果关系中的某一属性组（最小）可以唯一标识一个元组，则这个属性组称为候选码。</p>
+<p>主属性：候选码的诸属性称为主属性，其余称为非主属性。</p>
+<h5 id="2-2关系模式"><a href="#2-2关系模式" class="headerlink" title="2.2关系模式"></a>2.2关系模式</h5><p>关系的描述称为关系模式，给出形式R（U，D，DOM，F）其中R是关系名，U为其中的属性，DOM是属性向域的映像集合，F为属性间的依赖关系集合。</p>
+<h5 id="２-３关系的操作"><a href="#２-３关系的操作" class="headerlink" title="２.３关系的操作"></a>２.３关系的操作</h5><p>关系的操作可分为增删查改，其中查询又是其中主要的一部分。查询操作可分为选择（select），投影（）</p>
+<h4 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h4><p>1.简述关系数据库语言的特点和分类</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以分为三类：关系代数语言，关系演算语言和具有关系代数语言和关系演算语言双重特点的语言。关系数据语言能够表示关系代数可以表示的查询，具有完备的表达能力。</span><br></pre></td></tr></table></figure>
+
+<p>2.定义以下术语，说明联系和区别</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">（1）域，笛卡尔积，关系，元组，属性</span><br><span class="line">域：域是一组有相同数据类型的集合</span><br><span class="line">笛卡尔积：域之间不加条件的连接</span><br><span class="line">关系：笛卡尔积的自己称为关系</span><br><span class="line">元组：每个关系中的元素</span><br><span class="line">属性：二维表中的一列称为属性</span><br><span class="line">（2）主码，候选码，外码</span><br><span class="line">主码.候选码中被选定的一个</span><br><span class="line">候选码：能唯一标识一个元组的最小集合称为候选码</span><br><span class="line">外码：参照外部表的码，并且自身不是码的属性称为外码</span><br><span class="line">（3）关系模式，关系，关系数据库</span><br><span class="line">关系模式：关系的描述称为关系模式，主要描述了关系名，属性名，域名，映像集合，属性间的依赖</span><br><span class="line">关系：关系模式在某一时刻的内容</span><br><span class="line">关系数据库：在给定的应用领域中，所有关系构成一个关系数据库</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li></li>
+</ol>
+<p><img src="https://s2.loli.net/2024/01/27/fEx3DHdQFvZ76io.jpg"></p>
+<p><img src="https://s2.loli.net/2024/01/27/D5m2MN1ZUVwQP68.jpg"></p>
+<p><img src="https://s2.loli.net/2024/01/27/Xl1wK3ZWOBj4xcH.jpg"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6.</span><br><span class="line">7.</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%B0%8F%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%B0%8F%E7%BB%93/" class="post-title-link" itemprop="url">操作系统第二章小结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-25 23:49:03" itemprop="dateCreated datePublished" datetime="2023-02-25T23:49:03+08:00">2023-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-02-26 00:05:31" itemprop="dateModified" datetime="2023-02-26T00:05:31+08:00">2023-02-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BE%E5%86%85%E5%BF%85%E4%BF%AE-%E5%A4%8D%E4%B9%A0%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">-课内必修 -复习总结</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>概括：本章介绍了前趋图用于描述程序执行的先后，而后介绍了进程的概念，特征和状态及其转化，线程的概念。</p>
+<h4 id="前趋图"><a href="#前趋图" class="headerlink" title="前趋图"></a>前趋图</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用一张有向无环图来表示执行的先后</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/25/%E7%A1%AC%E7%9B%98%E8%AF%BB%E5%86%99%E6%B5%8B%E9%80%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,7 +612,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
