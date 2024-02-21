@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言在探究hashmap原理中计算数组位置一部分遇到了用h&amp;(length-1)来替代h%length的问题，不解前者的原理，所以探究了一下。以下摘自文心一言。 正文在表达式 return h &amp; (length-1) 中，h 是一个哈希值（通常是一个较大的整数），而 length-1 是一个掩码（mask），用于将 h 限制在 0 到 length-1 的范围内。这个表达式是位">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-21T03:02:11.000Z">
-<meta property="article:modified_time" content="2024-02-21T03:06:12.810Z">
+<meta property="article:modified_time" content="2024-02-21T03:14:04.885Z">
 <meta property="article:author" content="Fuff">
 <meta property="article:tag" content="-java">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-02-21 11:02:11 / Modified: 11:06:12" itemprop="dateCreated datePublished" datetime="2024-02-21T11:02:11+08:00">2024-02-21</time>
+              <time title="Created: 2024-02-21 11:02:11 / Modified: 11:14:04" itemprop="dateCreated datePublished" datetime="2024-02-21T11:02:11+08:00">2024-02-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,6 +218,7 @@
 
 <p>在这个例子中，只有 <code>h</code> 的最低三位与 <code>length-1</code> 的相应位相匹配，因此结果是 <code>00000010</code>，即十进制中的 <code>2</code>。这个值现在可以用作数组或列表的索引，因为它已经被限制在 <code>0</code> 到 <code>length-1</code>（即 <code>0</code> 到 <code>7</code>）的范围内。</p>
 <p>这种技术的一个关键前提是 <code>length</code> 必须是2的幂。如果 <code>length</code> 不是2的幂，那么 <code>length-1</code> 的二进制表示将不会有一系列连续的1，这可能导致哈希冲突或索引超出数组边界。当 <code>length</code> 是2的幂时，<code>length-1</code> 的二进制表示将有一系列连续的1，这可以确保 <code>h</code> 的任何位模式都会被映射到一个有效的索引。</p>
+<h4 id="学习地址"><a href="#学习地址" class="headerlink" title="学习地址"></a>学习地址</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42324489/article/details/106232141">HashMap终极总结，Java7与Java8的区别_java7 和java8 hashmap的区别-CSDN博客</a></p>
 
     </div>
 
@@ -298,7 +299,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">学习地址</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
