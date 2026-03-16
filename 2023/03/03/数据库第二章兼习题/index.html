@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"hardwin3.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="概述关系数据库是支持关系模型的数据库系统，关系模型分为关系数据结构，关系操作集合和关系完整性约束。2.1将给出关系数据结构的形式化定义，2.2将介绍关系操作，2.3讲解三类完整性约束，2.4以及2.5讲解关系代数和关系演算 2.1域：具有相同的的数据类型的值的集合称为域。域内允许的不同取值个数称为域的基数。 笛卡尔积：笛卡尔积是域的取值的全组合。 关系：笛卡尔积的子集称为关系，可按照属性的个数分为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库第二章兼习题">
+<meta property="og:url" content="https://hardwin3.github.io/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="概述关系数据库是支持关系模型的数据库系统，关系模型分为关系数据结构，关系操作集合和关系完整性约束。2.1将给出关系数据结构的形式化定义，2.2将介绍关系操作，2.3讲解三类完整性约束，2.4以及2.5讲解关系代数和关系演算 2.1域：具有相同的的数据类型的值的集合称为域。域内允许的不同取值个数称为域的基数。 笛卡尔积：笛卡尔积是域的取值的全组合。 关系：笛卡尔积的子集称为关系，可按照属性的个数分为">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-03T10:09:13.000Z">
+<meta property="article:modified_time" content="2026-03-16T09:58:39.885Z">
+<meta property="article:author" content="Fuff">
+<meta property="article:tag" content="数据库系统概论">
+<meta property="article:tag" content="课后习题">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://hardwin3.github.io/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hardwin3.github.io/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/","path":"2023/03/03/数据库第二章兼习题/","title":"数据库第二章兼习题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据库第二章兼习题 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Fuff</p>
+  <div class="site-description" itemprop="description">Vanse的个人博客，创建于2023年2月5日。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hardwin3.github.io/2023/03/03/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%85%BC%E4%B9%A0%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据库第二章兼习题 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库第二章兼习题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-03 18:09:13" itemprop="dateCreated datePublished" datetime="2023-03-03T18:09:13+08:00">2023-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-16 17:58:39" itemprop="dateModified" datetime="2026-03-16T17:58:39+08:00">2026-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E5%86%85%E5%BF%85%E4%BF%AE/" itemprop="url" rel="index"><span itemprop="name">课内必修</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AF%BE%E5%86%85%E5%BF%85%E4%BF%AE/%E5%A4%8D%E4%B9%A0%E6%80%BB%E7%BB%93/" itemprop="url" rel="index"><span itemprop="name">复习总结</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a href="#%E6%A6%82%E8%BF%B0"></a>概述关系数据库是支持关系模型的数据库系统，关系模型分为关系数据结构，关系操作集合和关系完整性约束。2.1将给出关系数据结构的形式化定义，2.2将介绍关系操作，2.3讲解三类完整性约束，2.4以及2.5讲解关系代数和关系演算</p>
+<p><a href="#2-1"></a>2.1域：具有相同的的数据类型的值的集合称为域。域内允许的不同取值个数称为域的基数。</p>
+<p>笛卡尔积：笛卡尔积是域的取值的全组合。</p>
+<p>关系：笛卡尔积的子集称为关系，可按照属性的个数分为单元，二元，多元关系。如果关系中的某一属性组（最小）可以唯一标识一个元组，则这个属性组称为候选码。</p>
+<p>主属性：候选码的诸属性称为主属性，其余称为非主属性。</p>
+<p><a href="#2-2%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%BC%8F"></a>2.2关系模式关系的描述称为关系模式，给出形式R（U，D，DOM，F）其中R是关系名，U为其中的属性，DOM是属性向域的映像集合，F为属性间的依赖关系集合。</p>
+<p><a href="#%EF%BC%92-%EF%BC%93%E5%85%B3%E7%B3%BB%E7%9A%84%E6%93%8D%E4%BD%9C"></a>２.３关系的操作关系的操作可分为增删查改，其中查询又是其中主要的一部分。查询操作可分为选择（select），投影（）</p>
+<p><a href="#%E4%B9%A0%E9%A2%98"></a>习题1.简述关系数据库语言的特点和分类</p>
+<p>1可以分为三类：关系代数语言，关系演算语言和具有关系代数语言和关系演算语言双重特点的语言。关系数据语言能够表示关系代数可以表示的查询，具有完备的表达能力。</p>
+<p>2.定义以下术语，说明联系和区别</p>
+<p>1234567891011121314（1）域，笛卡尔积，关系，元组，属性域：域是一组有相同数据类型的集合笛卡尔积：域之间不加条件的连接关系：笛卡尔积的自己称为关系元组：每个关系中的元素属性：二维表中的一列称为属性（2）主码，候选码，外码主码.候选码中被选定的一个候选码：能唯一标识一个元组的最小集合称为候选码外码：参照外部表的码，并且自身不是码的属性称为外码（3）关系模式，关系，关系数据库关系模式：关系的描述称为关系模式，主要描述了关系名，属性名，域名，映像集合，属性间的依赖关系：关系模式在某一时刻的内容关系数据库：在给定的应用领域中，所有关系构成一个关系数据库</p>
+<p>126.7.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" rel="tag"># 数据库系统概论</a>
+              <a href="/tags/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%98/" rel="tag"># 课后习题</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%BA%8C%E7%AB%A0%E5%B0%8F%E7%BB%93/" rel="prev" title="操作系统第二章小结">
+                  <i class="fa fa-angle-left"></i> 操作系统第二章小结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/18/%E5%A4%9A%E7%AB%AF%E5%A4%87%E4%BB%BDAPP/" rel="next" title="多端备份APP">
+                  多端备份APP <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Fuff</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
