@@ -945,7 +945,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:58:39" itemprop="dateModified" datetime="2026-03-16T17:58:39+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:27:34" itemprop="dateModified" datetime="2026-03-16T18:27:34+08:00">2026-03-16</time>
     </span>
 
   
@@ -961,7 +961,7 @@
           <p><a href="#arm64%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8Aarmbian%E6%8D%A2%E6%BA%90%E6%8A%A5%E9%94%99E-%E6%97%A0%E6%B3%95%E4%B8%8B%E8%BD%BD-https-mirrors-tuna-tsinghua-edu-cn-ubuntu-ports-dists-focal-restricted-binary-amd64-Packages-404-Not-Found-IP-101-6-15-130-443"></a>arm64开发板上armbian换源报错E: 无法下载 <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/dists/focal/restricted/binary-amd64/Packages</a>  404  Not Found [IP: 101.6.15.130 443]<a href="#sources-list%E5%A6%82%E5%9B%BE"></a>sources.list如图</p>
 <p>结果 sudo apt update 却遇上了报错</p>
 <p>分明使用的是ubuntu-ports,处理器架构也是arm64,apt 怎么会去获取amd64的软件包呢，多次换源无果，实在令人难解。</p>
-<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现</p>
+<p>好在根据关键词多次搜索，终于发现原因所在。使用dpkg查看系统软件包架构发现：</p>
 <p>123ajin@CRRC:~$ dpkg –print-foreign-architecturesarmhfamd64</p>
 <p>这一指令可以显示已安装软件包中包含的其他体系架构，比如系统本身是64位的，而用户安装了一个32位的软件，则这个32位的体系结构就被称为”foreign-architectures”.</p>
 <p>所以解决方法就是用dpkg来移除这个amd64的额外架构。</p>
