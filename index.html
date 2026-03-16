@@ -1021,132 +1021,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hardwin3.github.io/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Fuff">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/01/27/bash%E7%89%B9%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%8F%98%E9%87%8F/" class="post-title-link" itemprop="url">BASH特性和bash编程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-01-27 19:48:28" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="BASH特性和bash编程"><a href="#BASH特性和bash编程" class="headerlink" title="BASH特性和bash编程"></a>BASH特性和bash编程</h1><h4 id="bash-的特性"><a href="#bash-的特性" class="headerlink" title="bash 的特性"></a>bash 的特性</h4><ul>
-<li><p>命令行展开： ~，{}</p>
-</li>
-<li><p>命令别名：alias,unalias</p>
-</li>
-<li><p>命令历史：history</p>
-</li>
-<li><p>文件名通配：glob</p>
-</li>
-<li><p>快捷键：Ctrl+a,e,u,k,l</p>
-</li>
-<li><p>命令补全</p>
-</li>
-<li><p>路径补全</p>
-</li>
-<li><p>命令hash，缓存之前命令的查找结果，用hash 可以查看</p>
-</li>
-<li><p>变量</p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">程序：数据+指令</span><br><span class="line">指令：程序文件提供</span><br><span class="line">数据：IO设备，文件，管道，变量</span><br><span class="line">bash是一种弱类型的编程语言，把所有变量视为字符传芳。并且变量无需事先声明。</span><br><span class="line">变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">变量名：包含数字，字母，下划线，同时不能以数字开头。</span><br><span class="line">变量类型：</span><br><span class="line">本地变量：当前shell进程</span><br><span class="line">变量引用:$&#123;var_name&#125;,$var_name</span><br><span class="line">&quot;&quot;:变量名会替换为值</span><br><span class="line">&amp;#x27;&amp;#x27;：变量名不会替换为值</span><br><span class="line">设置或者查看变量：set</span><br><span class="line">撤销：unset var_name(不适用$)</span><br><span class="line">环境变量：当前shell以及子shell</span><br><span class="line">变量赋值：</span><br><span class="line">1.export name=fu</span><br><span class="line">2.name=fu</span><br><span class="line">export name</span><br><span class="line">3.declare -x name=fu</span><br><span class="line">查看环境变量：export,declare -x printenv,env</span><br><span class="line">撤销环境变量:unset var_name</span><br><span class="line">局部变量：某个代码作用域</span><br><span class="line">位置参数变量：向执行脚本的shell进程传递的参数</span><br><span class="line">特殊变量：shell内置的由特殊功能的变量</span><br><span class="line">Notes:</span><br><span class="line">设置为只读变量:readonly var_name或者declare -r var_name.</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li><p>多命令执行：        command；command；….按顺序执行</p>
-</li>
-<li><p>逻辑运算：<br>真（true，yes，on,1)</p>
-</li>
-<li><p>假（false,no,off,0)</p>
-</li>
-<li><p>与 &amp;&amp;</p>
-</li>
-<li><p>或 ||</p>
-</li>
-<li><p>非 ！</p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://hardwin3.github.io/2024/01/27/bash%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1245,6 +1119,182 @@
 </ul>
 <p>Notes:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(seq 1 10)表示从1到10</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(1..10) 也是</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://hardwin3.github.io/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Fuff">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="Vanse的个人博客，创建于2023年2月5日。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/27/bash%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">bash脚本编程思想和条件测试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-27 19:48:28" itemprop="dateCreated datePublished" datetime="2024-01-27T19:48:28+08:00">2024-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%99%E7%A8%8B/%E4%BA%A4%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">交流</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bash脚本编程思想和条件测试"><a href="#bash脚本编程思想和条件测试" class="headerlink" title="bash脚本编程思想和条件测试"></a>bash脚本编程思想和条件测试</h1><ul>
+<li>数据类型</li>
+</ul>
+<p>字符型</p>
+<ul>
+<li><p>数值型</p>
+</li>
+<li><p>算术运算</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+,-,*,/,**</span><br></pre></td></tr></table></figure>
+
+
+
+<p>let VAR&#x3D;expression</p>
+<ul>
+<li><p>VAR&#x3D;$[expression]</p>
+</li>
+<li><p>VAR&#x3D;$((expression))</p>
+</li>
+<li><p>VAR&#x3D;$(expr argu1 argu2)</p>
+</li>
+<li><p>增强型赋值</p>
+</li>
+</ul>
+<p>&#96;+&#x3D;，-&#x3D;，*&#x3D;，&#x2F;&#x3D;,%&#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- 要用let 描述， let i+=#</span><br><span class="line">- let VAR++</span><br><span class="line">- 条件测试</span><br><span class="line">- 判断需求是否满足，需要由测试机制来实现</span><br><span class="line">- 如何编写测试表达式以实现所需测试</span><br><span class="line">- 执行命令，并利用命令状态返回值来判断</span><br><span class="line">- 0成功</span><br><span class="line">- 1失败</span><br><span class="line">- 测试表达式</span><br><span class="line">- test expression</span><br><span class="line">- [ expression ]必须有空格</span><br><span class="line">- [[ expression ]]----关键字</span><br><span class="line">- 数值测试：数值比较</span><br><span class="line">- -eq : 是否等于 $num1 -eq $num2</span><br><span class="line">- -ne : 不等于</span><br><span class="line">- -gt :是否大于</span><br><span class="line">- -ge : 是否大于等于</span><br><span class="line">- -lt：是否小于</span><br><span class="line">- -le: 是否小于等于</span><br><span class="line">- 字符串设置：</span><br><span class="line">- ==：等值比较符号</span><br><span class="line">- ```</span><br><span class="line">&gt;:是否大于，外边尽可能使用双括号</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><pre><code>
+</code></pre>
+</li>
+<li><p>文件测试</p>
+</li>
+</ul>
+<p>-a 或-e FILE，[-e FILE],是否存在</p>
+<ul>
+<li><p>-b,是否存在且为块设备</p>
+</li>
+<li><p>-c,是否存在且为 字符设备文件</p>
+</li>
+<li><p>-d,目录文件</p>
+</li>
+<li><p>-f ,普通文件</p>
+</li>
+<li><p>-h ,符号连接文件</p>
+</li>
+<li><p>-p 命名管道文件</p>
+</li>
+<li><p>-S,套接字文件</p>
+</li>
+<li><p>权限测试<br>-r,是否存在并且当前用户可读</p>
+</li>
+<li><p>-w,可写</p>
+</li>
+<li><p>-x,可执行</p>
+</li>
+<li><p>特殊权限测试<br>-g,存在并且拥有suld权限</p>
+</li>
+<li><p>-u,是否存在且拥有sgld权限</p>
+</li>
+<li><p>-k,sticky权限</p>
+</li>
+<li><p>内容测试<br>-s,是否为空，空为假</p>
+</li>
+<li><p>时间戳测试<br>-N，上次读取后是否被修改过</p>
+</li>
+<li><p>从属关系测试<br>-Q，当前文件是否是文件的属主</p>
+</li>
+<li><p>-G,当前用户胡是否为文件的属组</p>
+</li>
+<li><p>双目测试<br>FILE1－ef FILE2 , FILE2和FILE2是否指向统一文件系统的相同Inode的硬链接</p>
+</li>
+<li><p>FILE1 -nt FILE2,FILE1是否新与FILE 2</p>
+</li>
+<li><p>FILE1 -ot FILE2,FILE1是否旧与FILE 2</p>
+</li>
+<li><p>逻辑运算<br>&amp;&amp; || ！</p>
+</li>
+<li><p>[ EXPRESSION -a EXPRESSION ] 并且</p>
+</li>
+<li><p>[ expression -o expression ]</p>
+</li>
+<li><p>脚本的状态返回值：最后执行的命令的返回值</p>
+</li>
+</ul>
+<p>自定义状态返回值，exit[n],n自定义，返回n。shell遇到exit[n]立马终止</p>
 
       
     </div>
