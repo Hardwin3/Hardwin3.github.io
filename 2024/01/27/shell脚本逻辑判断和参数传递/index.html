@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hardwin3.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="shell脚本逻辑判断和参数传递向脚本传递参数位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数$1,$2,$3…${10},${11}shift n ，轮替前n个参数，踢掉特殊变量$0,脚本路径本身$#,传递参数个数$@，所有参数$*,所有参数 执行顺序选择执行 单分支 123if 测试条件；then （then可以写在下面,不带;）	代码分支fi 双分支 12345">
+    <meta name="description" content="shell脚本逻辑判断和参数传递向脚本传递参数 位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数  $1,$2,$3…${10},${11}  shift n ，轮替前n个参数，踢掉  特殊变量$0,脚本路径本身  $#,传递参数个数  $@，所有参数  $*,所有参数   执行顺序 选择执行  单分支 123if 测试条件；then （then可以写在下面,不带;）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell脚本逻辑判断和参数传递">
 <meta property="og:url" content="https://hardwin3.github.io/2024/01/27/shell%E8%84%9A%E6%9C%AC%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="shell脚本逻辑判断和参数传递向脚本传递参数位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数$1,$2,$3…${10},${11}shift n ，轮替前n个参数，踢掉特殊变量$0,脚本路径本身$#,传递参数个数$@，所有参数$*,所有参数 执行顺序选择执行 单分支 123if 测试条件；then （then可以写在下面,不带;）	代码分支fi 双分支 12345">
+<meta property="og:description" content="shell脚本逻辑判断和参数传递向脚本传递参数 位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数  $1,$2,$3…${10},${11}  shift n ，轮替前n个参数，踢掉  特殊变量$0,脚本路径本身  $#,传递参数个数  $@，所有参数  $*,所有参数   执行顺序 选择执行  单分支 123if 测试条件；then （then可以写在下面,不带;）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-27T11:48:28.000Z">
-<meta property="article:modified_time" content="2026-03-16T09:49:53.297Z">
+<meta property="article:modified_time" content="2026-03-16T10:49:48.090Z">
 <meta property="article:author" content="Fuff">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -109,7 +109,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -122,6 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell%E8%84%9A%E6%9C%AC%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.</span> <span class="nav-text">shell脚本逻辑判断和参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">向脚本传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">执行顺序</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -206,7 +207,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:49:53" itemprop="dateModified" datetime="2026-03-16T17:49:53+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,12 +232,34 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><a href="#shell%E8%84%9A%E6%9C%AC%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E5%92%8C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"></a>shell脚本逻辑判断和参数传递<a href="#%E5%90%91%E8%84%9A%E6%9C%AC%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"></a>向脚本传递参数<br>位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数<br>$1,$2,$3…${10},${11}<br>shift n ，轮替前n个参数，踢掉<br>特殊变量<br>$0,脚本路径本身<br>$#,传递参数个数<br>$@，所有参数<br>$*,所有参数</p>
-<p><a href="#%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"></a>执行顺序<br>选择执行</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="shell脚本逻辑判断和参数传递"><a href="#shell脚本逻辑判断和参数传递" class="headerlink" title="shell脚本逻辑判断和参数传递"></a>shell脚本逻辑判断和参数传递</h1><h4 id="向脚本传递参数"><a href="#向脚本传递参数" class="headerlink" title="向脚本传递参数"></a>向脚本传递参数</h4><ul>
+<li><p>位置参数，ls &#x2F;etc ,&#x2F;etc就是命令传递进去的参数</p>
+</li>
+<li><p>$1,$2,$3…${10},${11}</p>
+</li>
+<li><p>shift n ，轮替前n个参数，踢掉</p>
+</li>
+<li><p>特殊变量<br>$0,脚本路径本身</p>
+</li>
+<li><p>$#,传递参数个数</p>
+</li>
+<li><p>$@，所有参数</p>
+</li>
+<li><p>$*,所有参数</p>
+</li>
+</ul>
+<h4 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h4><ul>
+<li>选择执行</li>
+</ul>
 <p>单分支</p>
-<p>123if 测试条件；then （then可以写在下面,不带;）	代码分支fi</p>
-<p>双分支</p>
-<p>12345if 测试条件；then	分支1else	分支2fi</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if 测试条件；then （then可以写在下面,不带;）</span><br><span class="line">代码分支</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>双分支</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 测试条件；<span class="keyword">then</span></span><br><span class="line">分支1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">分支2</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -253,8 +276,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/01/27/sed%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/" rel="prev" title="sed命令详解">
-                  <i class="fa fa-angle-left"></i> sed命令详解
+                <a href="/2024/01/27/shell%E8%84%9A%E6%9C%AC%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/" rel="prev" title="shell脚本高级用法">
+                  <i class="fa fa-angle-left"></i> shell脚本高级用法
                 </a>
             </div>
             <div class="post-nav-item">

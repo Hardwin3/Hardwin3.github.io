@@ -202,7 +202,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:58:39" itemprop="dateModified" datetime="2026-03-16T17:58:39+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,7 +229,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>概括：本章介绍了前趋图用于描述程序执行的先后，而后介绍了进程的概念，特征和状态及其转化，线程的概念。</p>
-<p><a href="#%E5%89%8D%E8%B6%8B%E5%9B%BE"></a>前趋图<a href="#%E6%A6%82%E5%BF%B5"></a>概念1用一张有向无环图来表示执行的先后</p>
+<h4 id="前趋图"><a href="#前趋图" class="headerlink" title="前趋图"></a>前趋图</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用一张有向无环图来表示执行的先后</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -292,7 +292,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:49:53" itemprop="dateModified" datetime="2026-03-16T17:49:53+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -319,9 +319,13 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>linux下使用dd命令进行简单测速</p>
-<p><a href="#%E6%B5%8B%E8%AF%95%E5%86%99%E5%85%A5%E9%80%9F%E5%BA%A6"></a>测试写入速度1dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;&#x2F;mnt&#x2F;filename bs&#x3D;1M count&#x3D;1024</p>
+<h3 id="测试写入速度"><a href="#测试写入速度" class="headerlink" title="测试写入速度"></a>测试写入速度</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/mnt/filename bs=1M count=1024</span><br></pre></td></tr></table></figure>
+
+
 <p>of后面跟着一个不存在的文件名，此命令会在&#x2F;mnt下写入一个名为filename，大小为1G的文件。此方法可以测试磁盘的读写速度。一样的道理，of后为硬盘挂载点时，测试所得写入速度就是硬盘的速度。</p>
-<p><a href="#%E6%B5%8B%E8%AF%95%E8%AF%BB%E5%8F%96%E9%80%9F%E5%BA%A6"></a>测试读取速度1dd if&#x3D;&#x2F;mnt&#x2F;filename of&#x3D;&#x2F;dev&#x2F;null bs&#x3D;1M count&#x3D;1024</p>
+<h3 id="测试读取速度"><a href="#测试读取速度" class="headerlink" title="测试读取速度"></a>测试读取速度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=/mnt/filename of=/dev/null bs=1M count=1024</span><br></pre></td></tr></table></figure>
+
+
 <p>所得速度就是读取速度</p>
 
       
@@ -385,7 +389,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:49:53" itemprop="dateModified" datetime="2026-03-16T17:49:53+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -474,7 +478,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-16 17:49:53" itemprop="dateModified" datetime="2026-03-16T17:49:53+08:00">2026-03-16</time>
+      <time title="修改时间：2026-03-16 18:49:48" itemprop="dateModified" datetime="2026-03-16T18:49:48+08:00">2026-03-16</time>
     </span>
 
   
@@ -487,15 +491,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<p><a href="#Quick-Start"></a>Quick Start<a href="#Create-a-new-post"></a>Create a new post1$ hexo new “My New Post”</p>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<p><a href="#Run-server"></a>Run server1$ hexo server</p>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<p><a href="#Generate-static-files"></a>Generate static files1$ hexo generate</p>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<p><a href="#Deploy-to-remote-sites"></a>Deploy to remote sites1$ hexo deploy</p>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+          <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>More info: Writing</p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+
+<p>More info: Server</p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+
+<p>More info: Generating</p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+
+<p>More info: Deployment</p>
 
       
     </div>
